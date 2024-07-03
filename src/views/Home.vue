@@ -1,9 +1,15 @@
 <template>
-  <div class="min-h-screen bg-gray-100 p-4">
-    <SoundGrid />
+  <div>
+    <h2 class="text-xl text-almostBlack">SoundBites</h2>
   </div>
 </template>
 
-<script setup>
-import SoundGrid from '../components/SoundGrid.vue';
+<script>
+export default {
+  name: 'Home'
+}
 </script>
+
+<style scoped>
+/* Styles specific to Home */
+</style>
