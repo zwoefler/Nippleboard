@@ -1,15 +1,28 @@
 <template>
   <div>
-    <h2 class="text-xl text-almostBlack">SoundBites</h2>
+    <ul>
+      <li v-for="sound in sounds" :key="sound.name">
+        <button @click="playSound(sound.url)">{{ sound.name }}</button>
+      </li>
+    </ul>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Home'
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const sounds = ref([]);
+
+onMounted(async () => {
+  const soundFiles = import.meta.glob('../assets/sounds/*.mp3', { eager: true });
+  sounds.value = Object.entries(soundFiles).map(([path, module]) => ({
+    name: path.split('/').pop(),
+    url: module.default
+  }));
+});
+
+function playSound(url) {
+  const audio = new Audio(url);
+  audio.play();
 }
 </script>
-
-<style scoped>
-/* Styles specific to Home */
-</style>
