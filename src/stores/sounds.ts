@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 export const useSoundsStore = defineStore('sounds', {
     state: () => ({
         sounds: [],
+        searchQuery: ''
     }),
     actions: {
         loadSounds() {
@@ -11,6 +12,6 @@ export const useSoundsStore = defineStore('sounds', {
                 name: path.split('/').pop(),
                 url: module.default
             }));
-        },
+        }
     }
 });
