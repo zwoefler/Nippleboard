@@ -11,12 +11,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-almostWhite">
+  <div class="bg-almostWhite">
     <nav
-      class="flex flex-col justify-center items-center fixed top-0 left-0 right-0 z-10 bg-almostBlack text-white h-20">
+      class="flex flex-col justify-center fixed items-center top-0 left-0 right-0 z-10 bg-almostBlack text-white h-20">
       <h1 class="font-bold">BITES</h1>
-      <input
-        class="h-10 w-full p-2 bg-white text-almostBlack rounded focus:outline-none focus:ring-2 focus:ring-accentOrange"
+      <input class="h-10 w-full p-2 bg-white rounded focus:outline-none focus:ring-2 focus:ring-accentOrange"
         placeholder="Search sounds...">
     </nav>
 
