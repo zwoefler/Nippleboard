@@ -27,9 +27,13 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch } from 'vue';
+import { useSoundsStore } from "@/stores/sounds"
+import { storeToRefs } from "pinia";
 
-const sounds = ref([]);
+const soundsStore = useSoundsStore()
+const { sounds } = storeToRefs(soundsStore)
+
 const currentPlaying = ref(null);
 const audio = ref(new Audio());
 
@@ -53,13 +57,5 @@ function playSound(sound) {
     currentPlaying.value = sound.name;
   }
 }
-
-onMounted(async () => {
-  const soundFiles = import.meta.glob('../assets/sounds/*.mp3', { eager: true });
-  sounds.value = Object.entries(soundFiles).map(([path, module]) => ({
-    name: path.split('/').pop(),
-    url: module.default
-  }));
-});
 
 </script>

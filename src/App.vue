@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import { onMounted } from 'vue';
+import { useSoundsStore } from '@/stores/sounds';
+
+const soundsStore = useSoundsStore();
+
+onMounted(() => {
+  soundsStore.loadSounds();
+});
 </script>
 
 <template>
