@@ -5,12 +5,8 @@
       v-for="sound in sounds" :key="sound.name">
       <button @click="playSound(sound)"
         class="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full shadow-lg hover:cursor-pointer hover:drop-shadow-xl hover:bg-blue-600 hover:scale-105">
-        <svg v-if="currentPlaying === sound.name" id="play-button" stroke="currentColor" fill="currentColor"
-          stroke-width="0" viewBox="0 0 448 512" class="text-slate-200 hover:scale-125" height="1em" width="1em">
-          <path
-            d="M144 479H48c-26.5 0-48-21.5-48-48V79c0-26.5 21.5-48 48-48h96c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48zm304-48V79c0-26.5-21.5-48-48-48h-96c-26.5 0-48 21.5-48 48v352c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48z">
-          </path>
-        </svg>
+        <PlayButton id="play-button" v-if="currentPlaying === sound.name">
+        </PlayButton>
         <svg v-else id="pause-button" stroke="currentColor" fill="currentColor" viewBox="0 0 32 32"
           enable-background="new 0 0 32 32">
           <g>
@@ -32,6 +28,7 @@ import { ref, watch } from 'vue';
 import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
 import { useRouter } from 'vue-router';
+import PlayButton from '@/components/PlayButton.vue'
 
 const soundsStore = useSoundsStore()
 const { sounds } = storeToRefs(soundsStore)
