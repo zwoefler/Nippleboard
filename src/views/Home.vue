@@ -2,10 +2,10 @@
   <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-4">
     <li v-for="sound in sounds" :key="sound.name">
       <div class="h-32 max-w-32 bg-gray-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        <button @click="togglePlay(sound)"
+        <button @click="playSound(sound)"
           class="w-12 h-12 flex flex-row items-center gap-2 justify-center bg-blue-500 rounded-full shadow-lg hover:cursor-pointer hover:drop-shadow-xl hover:bg-blue-600 hover:scale-105">
-          <svg v-if="sound.isPlaying" id="play-button" stroke="currentColor" fill="currentColor" stroke-width="0"
-            viewBox="0 0 448 512" class="text-slate-200 hover:scale-125" height="1em" width="1em">
+          <svg v-if="currentPlaying === sound.name" id="play-button" stroke="currentColor" fill="currentColor"
+            stroke-width="0" viewBox="0 0 448 512" class="text-slate-200 hover:scale-125" height="1em" width="1em">
             <path
               d="M144 479H48c-26.5 0-48-21.5-48-48V79c0-26.5 21.5-48 48-48h96c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48zm304-48V79c0-26.5-21.5-48-48-48h-96c-26.5 0-48 21.5-48 48v352c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48z">
             </path>
@@ -29,23 +29,30 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 
 const sounds = ref([]);
+const currentPlaying = ref(null);
+const audio = ref(new Audio());
 
-function togglePlay(sound) {
-  if (!sound.audio) {
-    sound.audio = new Audio(sound.url);
-    sound.audio.addEventListener('ended', () => {
-      sound.isPlaying = false;
-    });
+watch(currentPlaying, (newSound, oldSound) => {
+  if (newSound) {
+    audio.value.src = sounds.value.find(sound => sound.name === newSound).url;
+    audio.value.play();
+  } else if (audio.value) {
+    audio.value.pause();
   }
-  if (sound.isPlaying) {
-    sound.audio.pause();
+});
+
+function playSound(sound) {
+  if (currentPlaying.value === sound.name) {
+    currentPlaying.value = null;
   } else {
-    sound.audio.play();
+    currentPlaying.value = sound.name;
   }
-  sound.isPlaying = !sound.isPlaying;
+  sound.audio.addEventListener('ended', () => {
+    currentPlaying.value = null;
+  });
 }
 
 onMounted(async () => {
