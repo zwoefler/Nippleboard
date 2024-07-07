@@ -1,6 +1,7 @@
 <template>
   <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
-    <li class="flex flex-col items-center h-32 max-w-36 bg-gray-300 text-white font-bold p-2 rounded"
+    <li @click="goToSoundDetail(sound.name)"
+      class="flex flex-col items-center h-32 max-w-36 bg-gray-300 text-white font-bold p-2 rounded"
       v-for="sound in sounds" :key="sound.name">
       <button @click="playSound(sound)"
         class="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full shadow-lg hover:cursor-pointer hover:drop-shadow-xl hover:bg-blue-600 hover:scale-105">
@@ -30,6 +31,7 @@
 import { ref, watch } from 'vue';
 import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
+import { useRouter } from 'vue-router';
 
 const soundsStore = useSoundsStore()
 const { sounds } = storeToRefs(soundsStore)
@@ -40,6 +42,11 @@ const audio = ref(new Audio());
 audio.value.onended = () => {
   currentPlaying.value = null;
 };
+
+const router = useRouter();
+function goToSoundDetail(soundName) {
+  router.push({ name: 'SoundDetail', params: { id: soundName } });
+}
 
 watch(currentPlaying, (newSound, oldSound) => {
   if (newSound) {

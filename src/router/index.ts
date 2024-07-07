@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
+import SoundDetail from '../views/SoundDetail.vue';
 
 const routes = [
     {
@@ -7,6 +8,12 @@ const routes = [
         name: 'Home',
         component: Home
     },
+    {
+        path: '/sound/:id',
+        name: 'SoundDetail',
+        component: SoundDetail,
+        props: true
+    }
 ];
 
 const router = createRouter({
