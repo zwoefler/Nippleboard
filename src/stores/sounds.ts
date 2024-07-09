@@ -5,6 +5,17 @@ export const useSoundsStore = defineStore('sounds', {
         sounds: [],
         searchQuery: ''
     }),
+    getters: {
+        filteredSounds(state) {
+            if (!state.searchQuery.trim()) {
+                return state.sounds;
+            }
+            const searchLower = state.searchQuery.toLowerCase();
+            return state.sounds.filter(sound =>
+                sound.name.toLowerCase().includes(searchLower)
+            );
+        }
+    },
     actions: {
         loadSounds() {
             const soundFiles = import.meta.glob('../assets/sounds/*.mp3', { eager: true });
@@ -12,6 +23,9 @@ export const useSoundsStore = defineStore('sounds', {
                 name: path.split('/').pop(),
                 url: module.default
             }));
+        },
+        setSearchQuery(query) {
+            this.searchQuery = query;
         }
     }
 });
