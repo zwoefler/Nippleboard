@@ -1,7 +1,6 @@
 <template>
   <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
-    <li @click="goToSoundDetail(sound.name)"
-      class="flex flex-col items-center h-32 max-w-36 bg-gray-300 text-white font-bold p-2 rounded"
+    <li class="flex flex-col items-center h-32 max-w-36 bg-gray-300 text-white font-bold p-2 rounded"
       v-for="sound in sounds" :key="sound.name">
       <button @click="playSound(sound)"
         class="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full shadow-lg hover:cursor-pointer hover:drop-shadow-xl hover:bg-blue-600 hover:scale-105">
@@ -16,9 +15,11 @@
           </g>
         </svg>
       </button>
-      <p class="p-2 text-wrap text-xs">
-        {{ sound.name }}
-      </p>
+      <div @click="goToSoundDetail(sound.name)">
+        <p class="p-2 text-wrap text-xs">
+          {{ sound.name }}
+        </p>
+      </div>
     </li>
   </ul>
 </template>
