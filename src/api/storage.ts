@@ -1,5 +1,4 @@
 import { supabase } from './supabase';
-import { StorageFileAPIResponse } from '@supabase/supabase-js';
 
 export async function fetchSounds(): Promise<string[]> {
     const { data, error } = await supabase.storage.from('sounds').list();
@@ -9,5 +8,5 @@ export async function fetchSounds(): Promise<string[]> {
         return [];
     }
 
-    return data.map((file: StorageFileAPIResponse) => file.name);
+    return data.map((file) => file.name);
 }
