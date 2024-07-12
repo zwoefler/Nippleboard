@@ -3,15 +3,16 @@ import { RouterView } from 'vue-router'
 import { onMounted } from 'vue';
 import { useSoundsStore } from '@/stores/sounds';
 import { useRouter } from 'vue-router';
-// import { signInWithEmail } from '@/api/authentication';
+import { signInWithEmail } from '@/api/authentication';
+
+const data = signInWithEmail()
+console.log(data)
+
 
 const soundsStore = useSoundsStore();
 onMounted(() => {
   soundsStore.loadSounds();
 });
-
-// const data = await signInWithEmail()
-// console.log(data)
 
 const router = useRouter();
 function goToHomepage() {
