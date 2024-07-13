@@ -1,12 +1,15 @@
 import { defineStore } from 'pinia';
 import { fetchSoundsFromSupabase } from '@/api/storage';
 import { loadSoundsFromAssets } from '@/api/localSounds';
+import { getLoggedInUser } from '@/api/authentication';
+
 
 export const useSoundsStore = defineStore('sounds', {
     state: () => ({
         sounds: [],
         searchQuery: '',
-        useSupabase: true
+        useSupabase: true,
+        loadingSounds: false
     }),
     getters: {
         filteredSounds(state) {
@@ -21,17 +24,20 @@ export const useSoundsStore = defineStore('sounds', {
     },
     actions: {
         async loadSounds() {
-            if (this.useSupabase) {
+            this.loadingSounds = true;
+            const isLoggedIn = await getLoggedInUser()
+            if (this.useSupabase && isLoggedIn) {
                 this.sounds = await fetchSoundsFromSupabase()
             } else {
+                this.useSupabase = false;
                 this.sounds = loadSoundsFromAssets();
             }
+            this.loadingSounds = false;
         },
         setSearchQuery(query) {
             this.searchQuery = query;
         },
         toggleSource() {
-            console.log("SWITCH TOGGLE SOURCE FROM", this.useSupabase)
             this.useSupabase = !this.useSupabase;
             this.loadSounds();
         }

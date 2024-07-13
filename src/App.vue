@@ -1,15 +1,5 @@
 <script setup lang="ts">
 import { useRouter, RouterView } from 'vue-router';
-import { onMounted } from 'vue';
-import { signInWithEmail } from '@/api/authentication';
-import { useSoundsStore } from "@/stores/sounds"
-
-const { loadSounds } = useSoundsStore();
-
-onMounted(async () => {
-  await signInWithEmail()
-  await loadSounds()
-});
 
 const router = useRouter();
 function goToHomepage() {

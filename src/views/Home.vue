@@ -36,8 +36,12 @@ import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
 import { useRouter } from 'vue-router';
 import PlayButton from '@/components/PlayButton.vue'
+import { onMounted } from 'vue';
 
-const { toggleSource } = useSoundsStore();
+const { toggleSource, loadSounds } = useSoundsStore();
+onMounted(async () => {
+  await loadSounds()
+});
 
 const soundsStore = useSoundsStore()
 const { filteredSounds, sounds, useSupabase } = storeToRefs(soundsStore)
