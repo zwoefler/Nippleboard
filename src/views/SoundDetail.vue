@@ -32,20 +32,29 @@ function playSound() {
 }
 
 async function downloadSound(soundName) {
-  try {
-    const { data, error } = await supabase.storage.from('sounds').download(`sounds/${soundName}`);
+  if (sound.value.url.startsWith('http')) {
+    try {
+      const { data, error } = await supabase.storage.from('sounds').download(`sounds/${soundName}`);
 
-    const url = URL.createObjectURL(data);
+      const url = URL.createObjectURL(data);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = soundName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
+    } catch (error) {
+      console.error('Error downloading file:', error)
+    }
+  } else if (sound.value.url.startsWith('/')) {
     const a = document.createElement('a');
-    a.href = url;
+    a.href = sound.value.url;
     a.download = soundName;
     document.body.appendChild(a);
     a.click();
     a.remove();
-    URL.revokeObjectURL(url);
-
-  } catch (error) {
-    console.error('Error downloading file:', error)
   }
 }
 </script>
