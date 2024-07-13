@@ -6,8 +6,8 @@
 
 ## 🛤️ Roadmap
 1. MVP:
-- [ ] Play sounds stored on Supabase
-- [ ] Authentication to supabase
+- [X] Play sounds stored on Supabase
+- [X] Authentication to supabase
 - [ ] Download sounds
 
 2. Release:
