@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.0-alpha] - Sat. 13.07.2024
+
+Add download functionality for Supabase and local storage
+
+### ADDED
+- Download from local storage and Supabase storage bucket
+- Update Dev Docs
+
+### FIX
+- Make local and remote download work in same view
+
+---
+
 ## [0.1.3-alpha] - Sat. 13.07.2024
 
 Updating README and Added dev docs
