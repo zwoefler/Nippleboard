@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0-alpha] - Sat. 13.07.2024
+
+Added Login page & only pulls sounds when logged in
+
+### ADDED
+- Login Page & functionality
+- Redirect after login to Home Page
+
+### FIX
+- Only pulls sounds from Supabase when logged in
+
+
 ## [0.2.0-alpha] - Sat. 13.07.2024
 
 Add download functionality for Supabase and local storage
