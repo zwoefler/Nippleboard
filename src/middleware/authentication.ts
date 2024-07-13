@@ -1,10 +1,7 @@
-import { useSoundsStore } from '@/stores/sounds';
 import { signInWithEmail } from '@/api/authentication';
 import router from '@/router';
 
 export async function loginUserLoadSounds(email: string, password: string) {
-    const soundsStore = useSoundsStore();
-
     try {
         const user = await signInWithEmail(email, password);
         if (!user) {
@@ -13,7 +10,6 @@ export async function loginUserLoadSounds(email: string, password: string) {
         }
 
         await router.push({ name: 'Home' });
-        await soundsStore.loadSounds();
 
         return true;
     } catch (error) {

@@ -25,7 +25,8 @@ export const useSoundsStore = defineStore('sounds', {
     actions: {
         async loadSounds() {
             this.loadingSounds = true;
-            if (this.useSupabase && !!getLoggedInUser) {
+            const isLoggedIn = await getLoggedInUser()
+            if (this.useSupabase && isLoggedIn) {
                 this.sounds = await fetchSoundsFromSupabase()
             } else {
                 this.useSupabase = false;
@@ -37,7 +38,6 @@ export const useSoundsStore = defineStore('sounds', {
             this.searchQuery = query;
         },
         toggleSource() {
-            console.log("SWITCH TOGGLE SOURCE FROM", this.useSupabase)
             this.useSupabase = !this.useSupabase;
             this.loadSounds();
         }
