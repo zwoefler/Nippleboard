@@ -18,9 +18,8 @@ function goToHomepage() {
 </script>
 
 <template>
-  <div class="bg-almostWhite">
-    <nav
-      class="flex flex-col justify-center fixed items-center top-0 left-0 right-0 z-10 bg-almostBlack text-white h-20">
+  <div class="bg-gray-100">
+    <nav class="flex flex-col justify-center fixed items-center top-0 left-0 right-0 z-10 bg-slate-950 text-white h-20">
       <h1 @click="goToHomepage" class="font-bold">BITES</h1>
     </nav>
 
@@ -28,7 +27,7 @@ function goToHomepage() {
       <RouterView class="flex-grow" />
     </main>
 
-    <footer class="bg-footerBlack text-white p-4 text-center">
+    <footer class="bg-slate-950 text-white p-4 text-center">
       NIPPLEBOARD
     </footer>
   </div>
