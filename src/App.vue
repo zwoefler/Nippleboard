@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import { onMounted } from 'vue';
-import { useSoundsStore } from '@/stores/sounds';
+import { RouterView } from 'vue-router';
 import { useRouter } from 'vue-router';
+import { onMounted } from 'vue';
 import { signInWithEmail } from '@/api/authentication';
+import { fetchSounds } from '@/api/storage';
 
-
-const soundsStore = useSoundsStore();
 onMounted(async () => {
-  soundsStore.loadSounds();
-  const data = await signInWithEmail()
-  console.log(data)
+  await signInWithEmail()
+  const { data } = await fetchSounds()
+  console.log("DATA", data)
 });
 
 const router = useRouter();

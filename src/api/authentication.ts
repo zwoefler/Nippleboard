@@ -5,5 +5,5 @@ export async function signInWithEmail() {
         email: 'test@test.de',
         password: 'test',
     })
-    return { data }
+    return data
 }

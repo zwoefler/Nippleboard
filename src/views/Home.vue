@@ -1,6 +1,12 @@
 <template>
   <input type="text" v-model="searchQuery" placeholder="Search sounds..." class="mb-4 p-2 border rounded w-full"
     @input="updateSearch" />
+  <div>
+    <button @click="toggleSource">Toggle Sound Source</button>
+    <ul>
+      <li v-for="sound in filteredSounds" :key="sound.name">{{ sound.name }}</li>
+    </ul>
+  </div>
   <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
     <li class="flex flex-col items-center h-32 max-w-36 bg-gray-300 text-white font-bold p-2 rounded"
       v-for="sound in filteredSounds" :key="sound.name">
@@ -32,6 +38,8 @@ import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
 import { useRouter } from 'vue-router';
 import PlayButton from '@/components/PlayButton.vue'
+
+const { toggleSource } = useSoundsStore();
 
 const soundsStore = useSoundsStore()
 const { filteredSounds, sounds } = storeToRefs(soundsStore)
