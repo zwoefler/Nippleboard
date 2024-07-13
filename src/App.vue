@@ -3,12 +3,9 @@ import { RouterView } from 'vue-router';
 import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
 import { signInWithEmail } from '@/api/authentication';
-import { fetchSounds } from '@/api/storage';
 
 onMounted(async () => {
   await signInWithEmail()
-  const { data } = await fetchSounds()
-  console.log("DATA", data)
 });
 
 const router = useRouter();

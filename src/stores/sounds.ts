@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { supabase } from '@/api/supabase';
+import { fetchSounds } from '@/api/storage';
 
 export const useSoundsStore = defineStore('sounds', {
     state: () => ({
@@ -27,6 +28,7 @@ export const useSoundsStore = defineStore('sounds', {
             }
         },
         loadSoundsFromAssets() {
+            console.log("LOADING LOCAL SOUNDS")
             const soundFiles = import.meta.glob('../assets/sounds/*.mp3', { eager: true });
             this.sounds = Object.entries(soundFiles).map(([path, module]) => ({
                 name: path.split('/').pop(),
@@ -34,13 +36,21 @@ export const useSoundsStore = defineStore('sounds', {
             }));
         },
         async loadSoundsFromSupabase() {
+            console.log("LOADING SOUNDS FROM SUPABASE")
             try {
-                const { data, error } = await supabase.storage.from('sounds').list();
-                if (error) throw error;
-                // Map over the data to fit your local sound objects structure
-                this.sounds = data.map(file => ({
-                    name: file.name,
-                    url: "NONE"
+                const data = await fetchSounds();
+                console.log("FETCHDATA", data)
+                const paths = data.map(file => "sounds/" + file.name);
+                console.log("PATHS", paths)
+                const { data: signedData, error: signedError } = await supabase.storage.from('sounds')
+                    .createSignedUrls(paths, 3600);
+
+                console.log("signedDATA", signedData)
+                if (signedError) throw signedError;
+
+                this.sounds = signedData.map(({ path, signedUrl }) => ({
+                    name: path.split('/').pop(),
+                    url: signedUrl
                 }));
             } catch (error) {
                 console.error('Error fetching sounds from Supabase:', error);
@@ -51,6 +61,7 @@ export const useSoundsStore = defineStore('sounds', {
             this.searchQuery = query;
         },
         toggleSource() {
+            console.log("SWITCH TOGGLE SOURCE FROM", this.useSupabase)
             this.useSupabase = !this.useSupabase;
             this.loadSounds();
         }

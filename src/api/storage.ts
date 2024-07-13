@@ -13,5 +13,5 @@ export async function fetchSounds() {
         return [];
     }
 
-    return { data };
+    return data;
 }
