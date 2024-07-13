@@ -1,5 +1,3 @@
-
-
 export function loadSoundsFromAssets() {
     console.log("LOADING LOCAL SOUNDS")
     const soundFiles = import.meta.glob('../assets/sounds/*.mp3', { eager: true });
