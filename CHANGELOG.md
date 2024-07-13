@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1-alpha] - Sat. 13.07.2024
+
+### CHANGED
+- Removed unnecessary colors from Tailwind configuration to optimize styling.
+- Formatted the `vite.config.ts` file for better code readability.
+
+---
+
 ## [0.1.0-alpha] - Sat. 13.07.2024
 
 Release MVP as v0.1.0-alpha
