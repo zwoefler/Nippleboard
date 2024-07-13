@@ -8,7 +8,7 @@
 1. MVP:
 - [X] Play sounds stored on Supabase
 - [X] Authentication to supabase
-- [ ] Download sounds
+- [X] Download sounds
 
 2. Release:
 - [ ] Fix UI: Add loading spinner
