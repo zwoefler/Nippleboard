@@ -6,9 +6,9 @@
 
 ## 🛤️ Roadmap
 1. MVP:
-- [ ] Play sounds stored on Supabase
-- [ ] Authentication to supabase
-- [ ] Download sounds
+- [X] Play sounds stored on Supabase
+- [X] Authentication to supabase
+- [X] Download sounds
 
 2. Release:
 - [ ] Fix UI: Add loading spinner

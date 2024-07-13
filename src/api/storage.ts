@@ -26,3 +26,13 @@ export async function fetchSoundsFromSupabase() {
         return []
     }
 }
+
+export async function downloadSoundFromSupabase(soundName) {
+    try {
+        const { data, error } = await supabase.storage.from('sounds').download(`sounds/${soundName}`);
+        return data
+    } catch (error) {
+        console.error('Error downloading file:', error)
+    }
+
+}

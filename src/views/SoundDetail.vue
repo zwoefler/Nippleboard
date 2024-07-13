@@ -4,8 +4,8 @@
     <p>URL: {{ sound.url }}</p>
     <button @click="playSound"
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Play</button>
-    <a :href="sound.url" download
-      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Download</a>
+    <button @click="downloadSound(sound.name)"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Download</button>
   </div>
 </template>
 
@@ -14,6 +14,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from "pinia";
 import { useSoundsStore } from '@/stores/sounds';
+import { downloadSoundFromSupabase } from '@/api/storage';
 
 const route = useRoute();
 const soundsStore = useSoundsStore()
@@ -28,5 +29,25 @@ function playSound() {
   if (!sound.value) return;
   const audio = new Audio(sound.value.url);
   audio.play();
+}
+
+function downloadFile(url, filename) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+async function downloadSound(soundName) {
+  if (sound.value.url.startsWith('http')) {
+    const sound = await downloadSoundFromSupabase(soundName);
+    const url = URL.createObjectURL(sound);
+    downloadFile(url, soundName)
+    URL.revokeObjectURL(url);
+  } else if (sound.value.url.startsWith('/')) {
+    downloadFile(sound.value.url, soundName)
+  }
 }
 </script>
