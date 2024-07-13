@@ -1,14 +1,12 @@
 <template>
   <input type="text" v-model="searchQuery" placeholder="Search sounds..." class="mb-4 p-2 border rounded w-full"
     @input="updateSearch" />
-  <div>
-    <button @click="toggleSource">Toggle Sound Source</button>
-    <ul>
-      <li v-for="sound in filteredSounds" :key="sound.name">{{ sound.name }}</li>
-    </ul>
+  <div class="flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
+    <button class="bg-blue-500 p-2  rounded" @click="toggleSource">Toggle Source</button>
+    <p>Using Supabase: {{ useSupabase }}</p>
   </div>
   <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
-    <li class="flex flex-col items-center h-32 max-w-36 bg-gray-300 text-white font-bold p-2 rounded"
+    <li class="flex flex-col items-center h-32 max-w-36 bg-gray-700 text-white font-bold p-2 rounded"
       v-for="sound in filteredSounds" :key="sound.name">
       <button @click="playSound(sound)"
         class="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full shadow-lg hover:cursor-pointer hover:drop-shadow-xl hover:bg-blue-600 hover:scale-105">
@@ -42,7 +40,7 @@ import PlayButton from '@/components/PlayButton.vue'
 const { toggleSource } = useSoundsStore();
 
 const soundsStore = useSoundsStore()
-const { filteredSounds, sounds } = storeToRefs(soundsStore)
+const { filteredSounds, sounds, useSupabase } = storeToRefs(soundsStore)
 
 function updateSearch(event) {
   soundsStore.setSearchQuery(event.target.value);
