@@ -14,7 +14,6 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from "pinia";
 import { useSoundsStore } from '@/stores/sounds';
-import { supabase } from '@/api/supabase';
 import { downloadSoundFromSupabase } from '@/api/storage';
 
 const route = useRoute();
@@ -32,30 +31,23 @@ function playSound() {
   audio.play();
 }
 
+function downloadFile(url, filename) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
 async function downloadSound(soundName) {
   if (sound.value.url.startsWith('http')) {
-    try {
-      const sound = await downloadSoundFromSupabase(soundName);
-
-      const url = URL.createObjectURL(sound);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = soundName;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-
-    } catch (error) {
-
-    }
+    const sound = await downloadSoundFromSupabase(soundName);
+    const url = URL.createObjectURL(sound);
+    downloadFile(url, soundName)
+    URL.revokeObjectURL(url);
   } else if (sound.value.url.startsWith('/')) {
-    const a = document.createElement('a');
-    a.href = sound.value.url;
-    a.download = soundName;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    downloadFile(sound.value.url, soundName)
   }
 }
 </script>
