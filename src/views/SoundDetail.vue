@@ -15,6 +15,7 @@ import { useRoute } from 'vue-router';
 import { storeToRefs } from "pinia";
 import { useSoundsStore } from '@/stores/sounds';
 import { supabase } from '@/api/supabase';
+import { downloadSoundFromSupabase } from '@/api/storage';
 
 const route = useRoute();
 const soundsStore = useSoundsStore()
@@ -34,9 +35,9 @@ function playSound() {
 async function downloadSound(soundName) {
   if (sound.value.url.startsWith('http')) {
     try {
-      const { data, error } = await supabase.storage.from('sounds').download(`sounds/${soundName}`);
+      const sound = await downloadSoundFromSupabase(soundName);
 
-      const url = URL.createObjectURL(data);
+      const url = URL.createObjectURL(sound);
       const a = document.createElement('a');
       a.href = url;
       a.download = soundName;
@@ -46,7 +47,7 @@ async function downloadSound(soundName) {
       URL.revokeObjectURL(url);
 
     } catch (error) {
-      console.error('Error downloading file:', error)
+
     }
   } else if (sound.value.url.startsWith('/')) {
     const a = document.createElement('a');
