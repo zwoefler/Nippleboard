@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { supabase } from '@/api/supabase';
-import { fetchSounds } from '@/api/storage';
+import { fetchSoundsFromSupabase } from '@/api/storage';
+import { loadSoundsFromAssets } from '@/api/localSounds';
 
 export const useSoundsStore = defineStore('sounds', {
     state: () => ({
@@ -22,39 +22,9 @@ export const useSoundsStore = defineStore('sounds', {
     actions: {
         async loadSounds() {
             if (this.useSupabase) {
-                await this.loadSoundsFromSupabase();
+                this.sounds = await fetchSoundsFromSupabase()
             } else {
-                this.loadSoundsFromAssets();
-            }
-        },
-        loadSoundsFromAssets() {
-            console.log("LOADING LOCAL SOUNDS")
-            const soundFiles = import.meta.glob('../assets/sounds/*.mp3', { eager: true });
-            this.sounds = Object.entries(soundFiles).map(([path, module]) => ({
-                name: path.split('/').pop(),
-                url: module.default
-            }));
-        },
-        async loadSoundsFromSupabase() {
-            console.log("LOADING SOUNDS FROM SUPABASE")
-            try {
-                const data = await fetchSounds();
-                console.log("FETCHDATA", data)
-                const paths = data.map(file => "sounds/" + file.name);
-                console.log("PATHS", paths)
-                const { data: signedData, error: signedError } = await supabase.storage.from('sounds')
-                    .createSignedUrls(paths, 3600);
-
-                console.log("signedDATA", signedData)
-                if (signedError) throw signedError;
-
-                this.sounds = signedData.map(({ path, signedUrl }) => ({
-                    name: path.split('/').pop(),
-                    url: signedUrl
-                }));
-            } catch (error) {
-                console.error('Error fetching sounds from Supabase:', error);
-                this.sounds = []; // Reset the sounds array on error
+                this.sounds = loadSoundsFromAssets();
             }
         },
         setSearchQuery(query) {
