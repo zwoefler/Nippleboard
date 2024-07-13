@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.3-alpha] - Sat. 13.07.2024
+
+Updating README and Added dev docs
+
+### UPDATED
+- README.md includes .env file section to connect to supabase project
+
+### ADDED
+- docs/ directory with Devlopment roadmap
+
+---
+
 ## [0.1.2-alpha] - Sat. 13.07.2024
 
 Updating DOCS

@@ -10,6 +10,17 @@ A soundboard that plays sounds from either local storage or a Supabase cloud dat
 
 **Prerequisites:**
 - `node`
+- `.env` file with `VITE_APP_SUPABASE_URL` and `VITE_APP_SUPABASE_ANON_KEY`
+
+Find the settings in the Supabase project.
+Project Settings > API:
+- URL
+- Project API keys > `anon` `public`
+
+```ENV
+VITE_APP_SUPABASE_URL=<SUPABASE-URL>
+VITE_APP_SUPABASE_ANON_KEY=<SUPABASE_ANON_KEY>
+```
 
 **🚂 Getting Started:**
 ```SHELL
