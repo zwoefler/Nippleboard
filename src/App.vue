@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router';
-import { useRouter } from 'vue-router';
+import { useRouter, RouterView } from 'vue-router';
 import { onMounted } from 'vue';
 import { signInWithEmail } from '@/api/authentication';
 
