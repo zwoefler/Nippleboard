@@ -1,6 +1,20 @@
 # Changelog
 
+## [0.1.2-alpha] - Sat. 13.07.2024
+
+Updating DOCS
+
+### FIX
+- Updating CHANGELOG.md to reflect updated released version
+
+### ADDED
+- Add README instruction on how to use the project
+
+---
+
 ## [0.1.1-alpha] - Sat. 13.07.2024
+
+Release MVP as v0.1.1-alpha
 
 ### CHANGED
 - Removed unnecessary colors from Tailwind configuration to optimize styling.
