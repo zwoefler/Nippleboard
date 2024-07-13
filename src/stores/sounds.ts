@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia';
+import { fetchSoundsFromSupabase } from '@/api/storage';
+import { loadSoundsFromAssets } from '@/api/localSounds';
 
 export const useSoundsStore = defineStore('sounds', {
     state: () => ({
         sounds: [],
-        searchQuery: ''
+        searchQuery: '',
+        useSupabase: true
     }),
     getters: {
         filteredSounds(state) {
@@ -17,15 +20,20 @@ export const useSoundsStore = defineStore('sounds', {
         }
     },
     actions: {
-        loadSounds() {
-            const soundFiles = import.meta.glob('../assets/sounds/*.mp3', { eager: true });
-            this.sounds = Object.entries(soundFiles).map(([path, module]) => ({
-                name: path.split('/').pop(),
-                url: module.default
-            }));
+        async loadSounds() {
+            if (this.useSupabase) {
+                this.sounds = await fetchSoundsFromSupabase()
+            } else {
+                this.sounds = loadSoundsFromAssets();
+            }
         },
         setSearchQuery(query) {
             this.searchQuery = query;
+        },
+        toggleSource() {
+            console.log("SWITCH TOGGLE SOURCE FROM", this.useSupabase)
+            this.useSupabase = !this.useSupabase;
+            this.loadSounds();
         }
     }
 });
