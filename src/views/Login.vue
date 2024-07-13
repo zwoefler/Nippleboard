@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Login</h1>
-    <form @submit.prevent="handleLogin">
+    <form @submit.prevent="loginUserLoadSounds(email, password)">
       <div>
         <label for="email">Email:</label>
         <input type="email" id="email" v-model="email" required>
@@ -17,23 +17,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import { signInWithEmail } from '@/api/authentication';
-import { useRouter } from 'vue-router';
+import { loginUserLoadSounds } from '@/middleware/authentication';
 
-const router = useRouter();
 const email = ref('');
 const password = ref('');
-
-async function handleLogin() {
-  try {
-    const { user, error } = await signInWithEmail(email.value, password.value)
-    if (user) {
-      router.push({ name: "Home" })
-    } else {
-      alert('Login failed! Check Credentials')
-    }
-  } catch (error) {
-    alert("Login failed due to unexpected error", error)
-  }
-}
 </script>
