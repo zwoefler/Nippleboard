@@ -1,6 +1,20 @@
 <template>
   <input type="text" v-model="searchQuery" placeholder="Search sounds..." class="mb-4 p-2 border rounded w-full"
     @input="updateSearch" />
+  <div class="bg-gray-700 container text-white mx-auto p-4 flex flex-col items-center justify-center">
+    <input type="file" ref="fileInput" class="hidden" @change="handleFileChange" accept="audio/*" />
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      @click="triggerFileInput">
+      Select File
+    </button>
+    <button v-if="selectedFile"
+      class="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      @click="uploadFile">
+      Upload File
+    </button>
+    <p v-if="selectedFile" class="mt-2">Selected file: {{ selectedFile.name }}</p>
+  </div>
   <div class="flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
     <button class="bg-blue-500 p-2  rounded" @click="toggleSource">Toggle Source</button>
     <p>Using Supabase: {{ useSupabase }}</p>
@@ -37,6 +51,30 @@ import { storeToRefs } from "pinia";
 import { useRouter } from 'vue-router';
 import PlayButton from '@/components/PlayButton.vue'
 import { onMounted } from 'vue';
+import { uploadFileToStorage } from '@/api/storage';
+
+// UPLOADING SOUNDS
+const fileInput = ref(null);
+const selectedFile = ref(null);
+
+function triggerFileInput() {
+  fileInput.value.click();
+}
+
+function handleFileChange(event) {
+  selectedFile.value = event.target.files[0];
+}
+
+function uploadFile() {
+  if (!selectedFile.value) {
+    alert('No file selected!');
+    return;
+  }
+  console.log('Uploading', selectedFile.value.name);
+  uploadFileToStorage(selectedFile.value, selectedFile.value.name)
+  selectedFile.value = null
+}
+
 
 const { toggleSource, loadSounds } = useSoundsStore();
 onMounted(async () => {

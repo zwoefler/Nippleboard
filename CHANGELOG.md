@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0-alpha] - Mon. 15.07.2024
+
+Add Upload sound capability
+
+### ADDED
+- Upload button to upload sounds to Supabase
+- UploadFileToStorage APi function
+
 ## [0.3.0-alpha] - Sat. 13.07.2024
 
 Added Login page & only pulls sounds when logged in
