@@ -36,3 +36,12 @@ export async function downloadSoundFromSupabase(soundName) {
     }
 
 }
+
+export async function uploadFileToStorage(file, fileName) {
+    const { data, error } = await supabase.storage.from('sounds').upload(`sounds/${fileName}`, file)
+    if (error) {
+        console.log("Ups, something went wrong")
+    } else {
+        console.log("Uploaded", data)
+    }
+}
