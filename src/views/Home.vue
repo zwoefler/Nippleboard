@@ -72,6 +72,7 @@ function uploadFile() {
   }
   console.log('Uploading', selectedFile.value.name);
   uploadFileToStorage(selectedFile.value, selectedFile.value.name)
+  selectedFile.value = null
 }
 
 
