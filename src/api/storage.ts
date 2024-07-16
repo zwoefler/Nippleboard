@@ -10,7 +10,12 @@ export async function fetchSoundsFromSupabase() {
                 limit: 100
             });
 
-        const soundPaths = soundsList?.map(file => soundFolder + file.name);
+        if (!soundsList) {
+            console.error('No sounds list found.');
+            return [];
+        }
+
+        const soundPaths = soundsList.map(file => soundFolder + file.name);
         const { data: signedURLs } = await supabase
             .storage
             .from('sounds')
