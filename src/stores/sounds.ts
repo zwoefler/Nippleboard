@@ -3,16 +3,21 @@ import { fetchSoundsFromSupabase } from '@/api/storage';
 import { loadSoundsFromAssets } from '@/api/localSounds';
 import { getLoggedInUser } from '@/api/authentication';
 
+interface Sound {
+    name: string;
+    url: string;
+}
+
 
 export const useSoundsStore = defineStore('sounds', {
     state: () => ({
-        sounds: [],
+        sounds: [] as Sound[],
         searchQuery: '',
         useSupabase: true,
         loadingSounds: false
     }),
     getters: {
-        filteredSounds(state) {
+        filteredSounds(state): Sound[] {
             if (!state.searchQuery.trim()) {
                 return state.sounds;
             }
@@ -34,7 +39,7 @@ export const useSoundsStore = defineStore('sounds', {
             }
             this.loadingSounds = false;
         },
-        setSearchQuery(query) {
+        setSearchQuery(query: string) {
             this.searchQuery = query;
         },
         toggleSource() {

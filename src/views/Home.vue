@@ -1,6 +1,5 @@
 <template>
-  <input type="text" v-model="searchQuery" placeholder="Search sounds..." class="mb-4 p-2 border rounded w-full"
-    @input="updateSearch" />
+  <input type="text" placeholder="Search sounds..." class="mb-4 p-2 border rounded w-full" @input="updateSearch" />
   <div class="bg-gray-700 container text-white mx-auto p-4 flex flex-col items-center justify-center">
     <input type="file" ref="fileInput" class="hidden" @change="handleFileChange" accept="audio/*" />
     <button
@@ -45,24 +44,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
-import { useRouter } from 'vue-router';
 import PlayButton from '@/components/PlayButton.vue'
-import { onMounted } from 'vue';
 import { uploadFileToStorage } from '@/api/storage';
 
-// UPLOADING SOUNDS
-const fileInput = ref(null);
-const selectedFile = ref(null);
-
-function triggerFileInput() {
-  fileInput.value.click();
+interface Sound {
+  name: string;
+  url: string;
 }
 
-function handleFileChange(event) {
-  selectedFile.value = event.target.files[0];
+// UPLOADING SOUNDS
+const fileInput = ref<HTMLInputElement | null>(null);
+const selectedFile = ref<File | null>(null);
+
+function triggerFileInput() {
+  fileInput.value?.click();
+}
+
+function handleFileChange(event: Event) {
+  const target = event.target as HTMLInputElement;
+  selectedFile.value = target.files ? target.files[0] : null;
 }
 
 function uploadFile() {
@@ -82,13 +86,14 @@ onMounted(async () => {
 });
 
 const soundsStore = useSoundsStore()
-const { filteredSounds, sounds, useSupabase } = storeToRefs(soundsStore)
+const { filteredSounds, useSupabase } = storeToRefs(soundsStore)
 
-function updateSearch(event) {
-  soundsStore.setSearchQuery(event.target.value);
+function updateSearch(event: Event) {
+  const target = event.target as HTMLInputElement;
+  soundsStore.setSearchQuery(target.value);
 }
 
-const currentPlaying = ref(null);
+const currentPlaying = ref<string | null>(null);
 const audio = ref(new Audio());
 
 audio.value.onended = () => {
@@ -96,20 +101,23 @@ audio.value.onended = () => {
 };
 
 const router = useRouter();
-function goToSoundDetail(soundName) {
+function goToSoundDetail(soundName: string) {
   router.push({ name: 'SoundDetail', params: { id: soundName } });
 }
 
-watch(currentPlaying, (newSound, oldSound) => {
+watch(currentPlaying, (newSound) => {
   if (newSound) {
-    audio.value.src = sounds.value.find(sound => sound.name === newSound).url;
-    audio.value.play();
-  } else if (audio.value) {
-    audio.value.pause();
+    const sound = soundsStore.sounds.find(sound => sound.name === newSound);
+    if (sound) {
+      audio.value.src = sound.url;
+      audio.value.play();
+    } else {
+      audio.value.pause();
+    }
   }
 });
 
-function playSound(sound) {
+function playSound(sound: Sound) {
   if (currentPlaying.value === sound.name) {
     currentPlaying.value = null;
   } else {

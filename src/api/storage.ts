@@ -1,6 +1,11 @@
 import { supabase } from './supabase';
 
-export async function fetchSoundsFromSupabase() {
+interface Sound {
+    name: string;
+    url: string;
+}
+
+export async function fetchSoundsFromSupabase(): Promise<Sound[]> {
     try {
         const soundFolder = "sounds/"
         const { data: soundsList } = await supabase
