@@ -1,6 +1,10 @@
+type SoundModule = {
+    default: string;
+};
+
 export function loadSoundsFromAssets() {
     console.log("LOADING LOCAL SOUNDS")
-    const soundFiles = import.meta.glob('../assets/sounds/*.mp3', { eager: true });
+    const soundFiles = import.meta.glob<{ [Key: string]: SoundModule }>('../assets/sounds/*.mp3', { eager: true });
     const sounds = Object.entries(soundFiles).map(([path, module]) => ({
         name: path.split('/').pop(),
         url: module.default
