@@ -1,7 +1,3 @@
-type SoundModule = {
-    default: string;
-};
-
 interface Sound {
     name: string;
     url: string;
@@ -9,9 +5,9 @@ interface Sound {
 
 export function loadSoundsFromAssets(): Sound[] {
     console.log("LOADING LOCAL SOUNDS")
-    const soundFiles = import.meta.glob<{ [Key: string]: SoundModule }>('../assets/sounds/*.mp3', { eager: true });
-    const sounds = Object.entries(soundFiles).map(([path, module]) => ({
-        name: path.split('/').pop(),
+    const soundFiles = import.meta.glob<{ [Key: string]: string }>('../assets/sounds/*.mp3', { eager: true });
+    const sounds: Sound[] = Object.entries(soundFiles).map(([path, module]) => ({
+        name: path.split('/').pop() || "Unnamed Sound",
         url: module.default
     }));
     return sounds;
