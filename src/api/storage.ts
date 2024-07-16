@@ -37,9 +37,13 @@ export async function fetchSoundsFromSupabase() {
     }
 }
 
-export async function downloadSoundFromSupabase(soundName) {
+export async function downloadSoundFromSupabase(soundName: string) {
     try {
         const { data, error } = await supabase.storage.from('sounds').download(`sounds/${soundName}`);
+        if (error) {
+            console.error("ERROR downloading sound: ", error);
+            return null;
+        }
         return data
     } catch (error) {
         console.error('Error downloading file:', error)
@@ -47,7 +51,7 @@ export async function downloadSoundFromSupabase(soundName) {
 
 }
 
-export async function uploadFileToStorage(file, fileName) {
+export async function uploadFileToStorage(file: File, fileName: string) {
     const { data, error } = await supabase.storage.from('sounds').upload(`sounds/${fileName}`, file)
     if (error) {
         console.log("Ups, something went wrong")
