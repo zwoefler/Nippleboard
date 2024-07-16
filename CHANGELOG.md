@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0-alpha] - Tue. 16.07.2024
+
+Deploy to GitHub Pages
+
+### ADDED
+- Docs for GitHub Actions Setup
+- GitHub Actions workflow to deploy to GitHub Pages
+- Make sure redirects on GitHub Pages work (GitHub Action)
+
+### IMPROVED
+- Typescript configuration and types missmatches and possible nullity
+
 ## [0.4.0-alpha] - Mon. 15.07.2024
 
 Add Upload sound capability
