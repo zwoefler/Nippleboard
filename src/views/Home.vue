@@ -44,7 +44,7 @@
   </ul>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
