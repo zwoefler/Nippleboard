@@ -16,10 +16,15 @@ export async function fetchSoundsFromSupabase() {
         }
 
         const soundPaths = soundsList.map(file => soundFolder + file.name);
-        const { data: signedURLs } = await supabase
+        const { data: signedURLs, error: urlsError } = await supabase
             .storage
             .from('sounds')
             .createSignedUrls(soundPaths, 3600);
+
+        if (urlsError) {
+            console.error('Error getting signed URLs:', urlsError);
+            return [];
+        }
 
         const sounds = signedURLs.map(({ path, signedUrl }) => ({
             name: path?.split('/').pop(),
