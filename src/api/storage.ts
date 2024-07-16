@@ -32,7 +32,7 @@ export async function fetchSoundsFromSupabase(): Promise<Sound[]> {
         }
 
         const sounds = signedURLs.map(({ path, signedUrl }) => ({
-            name: path?.split('/').pop(),
+            name: path?.split('/').pop() || "Unnamed Sound",
             url: signedUrl
         }));
         return sounds
