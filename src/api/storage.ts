@@ -56,6 +56,7 @@ export async function downloadSoundFromSupabase(soundName: string) {
 
 }
 
+
 export async function uploadFileToStorage(file: File, fileName: string) {
     const { data, error } = await supabase.storage.from('sounds').upload(`sounds/${fileName}`, file)
     if (error) {

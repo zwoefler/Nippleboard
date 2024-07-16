@@ -49,7 +49,6 @@ import { useRouter } from 'vue-router';
 import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
 import PlayButton from '@/components/PlayButton.vue'
-import { uploadFileToStorage } from '@/api/storage';
 
 interface Sound {
   name: string;
