@@ -16,13 +16,18 @@ import { storeToRefs } from "pinia";
 import { useSoundsStore } from '@/stores/sounds';
 import { downloadSoundFromSupabase } from '@/api/storage';
 
+interface Sound {
+  name: string;
+  url: string;
+}
+
 const route = useRoute();
 const soundsStore = useSoundsStore()
 const { sounds } = storeToRefs(soundsStore)
-const sound = ref(null);
+const sound = ref<Sound | null>(null);
 
 onMounted(() => {
-  sound.value = sounds.value.find(s => s.name === route.params.id);
+  sound.value = sounds.value.find(s => s.name === route.params.id) || null;
 });
 
 function playSound() {
@@ -31,7 +36,7 @@ function playSound() {
   audio.play();
 }
 
-function downloadFile(url, filename) {
+function downloadFile(url: string, filename: string) {
   const a = document.createElement('a');
   a.href = url;
   a.download = filename;
@@ -40,12 +45,15 @@ function downloadFile(url, filename) {
   a.remove();
 }
 
-async function downloadSound(soundName) {
+async function downloadSound(soundName: string) {
+  if (!sound.value) return;
   if (sound.value.url.startsWith('http')) {
-    const sound = await downloadSoundFromSupabase(soundName);
-    const url = URL.createObjectURL(sound);
-    downloadFile(url, soundName)
-    URL.revokeObjectURL(url);
+    const soundBlob = await downloadSoundFromSupabase(soundName);
+    if (soundBlob) {
+      const url = URL.createObjectURL(soundBlob);
+      downloadFile(url, soundName)
+      URL.revokeObjectURL(url);
+    }
   } else if (sound.value.url.startsWith('/')) {
     downloadFile(sound.value.url, soundName)
   }
