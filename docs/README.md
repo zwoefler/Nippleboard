@@ -16,6 +16,9 @@
 - [X] Upload Sounds: Upload page, adds sound to storage
 
 3. FEATURES
+- [ ] Add Login button to Home View
+    - [ ] When logged in > "Logout"
+    - [ ] Redirects to /login
 
 ## 🚧 Issues
 - [ ] URL name to long makes horizontal scrolling out of view
