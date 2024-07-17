@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2-alpha] - Wed. 17.07.2024
+
+Add Login Link on Homepage
+
+### ADDED
+- Button that redirects to /login
+
 ## [0.5.1-alpha] - Wed. 17.07.2024
 
 Sounds now reload after upload
