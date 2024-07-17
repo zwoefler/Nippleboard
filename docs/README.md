@@ -16,7 +16,7 @@
 - [X] Upload Sounds: Upload page, adds sound to storage
 
 3. FEATURES
-- [ ] Add Login button to Home View
+- [X] Add Login button to Home View
     - [ ] When logged in > "Logout"
     - [ ] Redirects to /login
 
