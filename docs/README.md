@@ -11,7 +11,7 @@
 - [X] Download sounds
 
 2. Release:
-- [ ] Login Page: Login with E-Mail + Password (No reset, signup, etc.)
+- [X] Login Page: Login with E-Mail + Password (No reset, signup, etc.)
 - [ ] Fix UI: Add loading spinner
 - [ ] Upload Sounds: Upload page, adds sound to storage
 
