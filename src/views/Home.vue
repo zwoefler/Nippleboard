@@ -56,6 +56,11 @@ interface Sound {
   url: string;
 }
 
+const { toggleSource, loadSounds } = useSoundsStore();
+onMounted(async () => {
+  await loadSounds()
+});
+
 // UPLOADING SOUNDS
 const fileInput = ref<HTMLInputElement | null>(null);
 const selectedFile = ref<File | null>(null);
@@ -69,7 +74,7 @@ function handleFileChange(event: Event) {
   selectedFile.value = target.files ? target.files[0] : null;
 }
 
-function uploadFile() {
+async function uploadFile() {
   if (!selectedFile.value) {
     alert('No file selected!');
     return;
@@ -77,13 +82,11 @@ function uploadFile() {
   console.log('Uploading', selectedFile.value.name);
   uploadFileToStorage(selectedFile.value, selectedFile.value.name)
   selectedFile.value = null
+  await loadSounds()
 }
 
 
-const { toggleSource, loadSounds } = useSoundsStore();
-onMounted(async () => {
-  await loadSounds()
-});
+
 
 const soundsStore = useSoundsStore()
 const { filteredSounds, useSupabase } = storeToRefs(soundsStore)
