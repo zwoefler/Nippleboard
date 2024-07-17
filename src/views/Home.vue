@@ -1,4 +1,5 @@
 <template>
+  <router-link class="bg-blue-500 p-2 rounded" to="/login">Login</router-link>
   <input type="text" placeholder="Search sounds..." class="mb-4 p-2 border rounded w-full" @input="updateSearch" />
   <div class="bg-gray-700 container text-white mx-auto p-4 flex flex-col items-center justify-center">
     <input type="file" ref="fileInput" class="hidden" @change="handleFileChange" accept="audio/*" />
