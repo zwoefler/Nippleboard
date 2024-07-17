@@ -18,6 +18,9 @@
     <button class="bg-blue-500 p-2  rounded" @click="toggleSource">Toggle Source</button>
     <p>Using Supabase: {{ useSupabase }}</p>
   </div>
+  <div class="bg-yellow-500 text-black" v-if="loadingSounds">
+    Loading Sounds...
+  </div>
   <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
     <li class="flex flex-col items-center h-32 max-w-36 bg-gray-700 text-white font-bold p-2 rounded"
       v-for="sound in filteredSounds" :key="sound.name">
@@ -55,6 +58,8 @@ interface Sound {
   name: string;
   url: string;
 }
+const soundsStore = useSoundsStore()
+const { filteredSounds, useSupabase, loadingSounds } = storeToRefs(soundsStore)
 
 const { toggleSource, loadSounds } = useSoundsStore();
 onMounted(async () => {
@@ -85,11 +90,6 @@ async function uploadFile() {
   await loadSounds()
 }
 
-
-
-
-const soundsStore = useSoundsStore()
-const { filteredSounds, useSupabase } = storeToRefs(soundsStore)
 
 function updateSearch(event: Event) {
   const target = event.target as HTMLInputElement;
