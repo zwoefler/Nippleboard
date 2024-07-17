@@ -13,7 +13,7 @@
 2. Release:
 - [X] Login Page: Login with E-Mail + Password (No reset, signup, etc.)
 - [ ] Fix UI: Add loading spinner
-- [ ] Upload Sounds: Upload page, adds sound to storage
+- [X] Upload Sounds: Upload page, adds sound to storage
 
 3. FEATURES
 
