@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.5.2-alpha] - Wed. 17.07.2024
+
+Add Login Link on Homepage
+
+### ADDED
+- Button that redirects to /login
+
+## [0.5.1-alpha] - Wed. 17.07.2024
+
+Sounds now reload after upload
+
+### ADDED
+- Reloading sounds from Supabase after upload
+- "Loading Sounds..." message in Home View when Sounds are loaded
+
+### FIX
+- Upload issue - Function not imported
+- Version and Description in package.json (After accidental delete)
+
+### IMPROVED
+- Updated Docs
+
 ## [0.5.0-alpha] - Tue. 16.07.2024
 
 Deploy to GitHub Pages

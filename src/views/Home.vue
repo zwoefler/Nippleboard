@@ -1,4 +1,5 @@
 <template>
+  <router-link class="bg-blue-500 p-2 rounded" to="/login">Login</router-link>
   <input type="text" placeholder="Search sounds..." class="mb-4 p-2 border rounded w-full" @input="updateSearch" />
   <div class="bg-gray-700 container text-white mx-auto p-4 flex flex-col items-center justify-center">
     <input type="file" ref="fileInput" class="hidden" @change="handleFileChange" accept="audio/*" />
@@ -17,6 +18,9 @@
   <div class="flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
     <button class="bg-blue-500 p-2  rounded" @click="toggleSource">Toggle Source</button>
     <p>Using Supabase: {{ useSupabase }}</p>
+  </div>
+  <div class="bg-yellow-500 text-black" v-if="loadingSounds">
+    Loading Sounds...
   </div>
   <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
     <li class="flex flex-col items-center h-32 max-w-36 bg-gray-700 text-white font-bold p-2 rounded"
@@ -48,12 +52,20 @@ import { ref, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
+import { uploadFileToStorage } from '@/api/storage';
 import PlayButton from '@/components/PlayButton.vue'
 
 interface Sound {
   name: string;
   url: string;
 }
+const soundsStore = useSoundsStore()
+const { filteredSounds, useSupabase, loadingSounds } = storeToRefs(soundsStore)
+
+const { toggleSource, loadSounds } = useSoundsStore();
+onMounted(async () => {
+  await loadSounds()
+});
 
 // UPLOADING SOUNDS
 const fileInput = ref<HTMLInputElement | null>(null);
@@ -68,7 +80,7 @@ function handleFileChange(event: Event) {
   selectedFile.value = target.files ? target.files[0] : null;
 }
 
-function uploadFile() {
+async function uploadFile() {
   if (!selectedFile.value) {
     alert('No file selected!');
     return;
@@ -76,16 +88,9 @@ function uploadFile() {
   console.log('Uploading', selectedFile.value.name);
   uploadFileToStorage(selectedFile.value, selectedFile.value.name)
   selectedFile.value = null
+  await loadSounds()
 }
 
-
-const { toggleSource, loadSounds } = useSoundsStore();
-onMounted(async () => {
-  await loadSounds()
-});
-
-const soundsStore = useSoundsStore()
-const { filteredSounds, useSupabase } = storeToRefs(soundsStore)
 
 function updateSearch(event: Event) {
   const target = event.target as HTMLInputElement;

@@ -11,11 +11,14 @@
 - [X] Download sounds
 
 2. Release:
-- [ ] Login Page: Login with E-Mail + Password (No reset, signup, etc.)
+- [X] Login Page: Login with E-Mail + Password (No reset, signup, etc.)
 - [ ] Fix UI: Add loading spinner
-- [ ] Upload Sounds: Upload page, adds sound to storage
+- [X] Upload Sounds: Upload page, adds sound to storage
 
 3. FEATURES
+- [X] Add Login button to Home View
+    - [ ] When logged in > "Logout"
+    - [ ] Redirects to /login
 
 ## 🚧 Issues
 - [ ] URL name to long makes horizontal scrolling out of view
