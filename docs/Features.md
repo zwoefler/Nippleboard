@@ -5,3 +5,14 @@
 - [X] Click on Navbar to redirecto to Home
 - [ ] Hover over name like a link
 - [X] Delete search query in search bar with X in search bar
+
+
+## Soundbite Details
+- [ ] On upload provide: soundfile <File>, source URL <string>, description <string>, name <string>, automatically set "storagePath".
+- [ ] On SoundDetail Page: Show Name, Source URL, Description, Download Button, Play Button
+- [ ] On SoundDetail Page: Have Save button to save changes made to name, description or source url
+    - [ ] If name exists: Message --> "Sound with name xxx exists. "
+    - [ ] Make existing sound playable + show name
+- [ ] On Upload: Message: "Sound with name xxx exists. Saved as xxx(1)".
+    - [ ] Saving duplicated sound as xyz.mp3 --> xyz(1).mp3
+    - [ ] Saving duplicated sound name as xyz --> xyz(1)
