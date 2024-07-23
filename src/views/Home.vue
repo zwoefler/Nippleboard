@@ -46,18 +46,17 @@
         <PauseButton v-else id="pause-button">
         </PauseButton>
       </button>
-      <div @click="goToSoundDetail(sound.name)">
-        <p class="p-2 text-wrap text-xs">
+      <router-link :to="{ name: 'SoundDetail', params: { id: sound.name } }">
+        <p class=" p-2 text-wrap text-xs">
           {{ sound.name }}
         </p>
-      </div>
+      </router-link>
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
 import { uploadFileToStorage } from '@/api/storage';
@@ -117,11 +116,6 @@ const audio = ref(new Audio());
 audio.value.onended = () => {
   currentPlaying.value = null;
 };
-
-const router = useRouter();
-function goToSoundDetail(soundName: string) {
-  router.push({ name: 'SoundDetail', params: { id: soundName } });
-}
 
 watch(currentPlaying, (newSound) => {
   if (newSound) {
