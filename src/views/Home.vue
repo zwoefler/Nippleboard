@@ -22,14 +22,14 @@
       Select File
     </button>
     <button v-if="selectedFile"
-      class="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       @click="uploadFile">
       Upload File
     </button>
     <p v-if="selectedFile" class="mt-2">Selected file: {{ selectedFile.name }}</p>
   </div>
   <div class="flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
-    <button class="bg-blue-500 p-2  rounded" @click="toggleSource">Toggle Source</button>
+    <button class="bg-blue-500 p-2 rounded" @click="toggleSource">Toggle Source</button>
     <p>Using Supabase: {{ useSupabase }}</p>
   </div>
   <div class="bg-yellow-500 text-black" v-if="loadingSounds">
