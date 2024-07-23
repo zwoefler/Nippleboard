@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3-alpha] - Tue. 23.07.2024
+
+Add "Clear Searchbar" button to clear the searchbar with X-button
+
+### ADDED
+- Button to clear search bar
+
 ## [0.5.2-alpha] - Wed. 17.07.2024
 
 Add Login Link on Homepage
