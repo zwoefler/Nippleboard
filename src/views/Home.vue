@@ -1,7 +1,20 @@
 <template>
   <router-link class="bg-blue-500 p-2 rounded" to="/login">Login</router-link>
-  <input type="text" placeholder="Search sounds..." class="mb-4 p-2 border rounded w-full" @input="updateSearch" />
-  <div class="bg-gray-700 container text-white mx-auto p-4 flex flex-col items-center justify-center">
+  <!-- <input type="text" placeholder="Search sounds..." class="mb-4 p-2 border rounded w-full" @input="updateSearch" /> -->
+  <div class="container text-white mx-auto p-4 flex flex-col items-center justify-center">
+    <div class="relative w-full mb-4">
+      <input type="text" v-model="searchQuery" placeholder="Search sounds..."
+        class="text-gray-700 p-2 border rounded w-full pl-3 pr-10" @input="updateSearch">
+      <button v-if="searchQuery" @click="clearSearch"
+        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+        <!-- You can use an SVG or an emoji for the "X" -->
+        <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M10 9.293l6.293-6.293a1 1 0 010 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 011.414-1.414L10 8.586l5.293-5.293a1 1 0 011.414 0z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
     <input type="file" ref="fileInput" class="hidden" @change="handleFileChange" accept="audio/*" />
     <button
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -62,10 +75,13 @@ interface Sound {
 const soundsStore = useSoundsStore()
 const { filteredSounds, useSupabase, loadingSounds } = storeToRefs(soundsStore)
 
+var searchQuery = ref("")
+
 const { toggleSource, loadSounds } = useSoundsStore();
 onMounted(async () => {
   await loadSounds()
 });
+
 
 // UPLOADING SOUNDS
 const fileInput = ref<HTMLInputElement | null>(null);
@@ -92,9 +108,13 @@ async function uploadFile() {
 }
 
 
-function updateSearch(event: Event) {
-  const target = event.target as HTMLInputElement;
-  soundsStore.setSearchQuery(target.value);
+function updateSearch() {
+  soundsStore.setSearchQuery(searchQuery.value);
+}
+
+function clearSearch() {
+  searchQuery.value = ""
+  soundsStore.setSearchQuery(searchQuery.value);
 }
 
 const currentPlaying = ref<string | null>(null);
