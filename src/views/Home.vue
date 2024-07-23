@@ -1,5 +1,6 @@
 <template>
   <router-link class="bg-blue-500 p-2 rounded" to="/login">Login</router-link>
+
   <div class="container text-white mx-auto p-4 flex flex-col items-center justify-center">
     <div class="relative w-full mb-4">
       <input type="text" v-model="searchQuery" placeholder="Search sounds..."
@@ -13,6 +14,7 @@
         </svg>
       </button>
     </div>
+
     <input type="file" ref="fileInput" class="hidden" @change="handleFileChange" accept="audio/*" />
     <button
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -33,6 +35,7 @@
   <div class="bg-yellow-500 text-black" v-if="loadingSounds">
     Loading Sounds...
   </div>
+
   <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
     <li class="flex flex-col items-center h-32 max-w-36 bg-gray-700 text-white font-bold p-2 rounded"
       v-for="sound in filteredSounds" :key="sound.name">
