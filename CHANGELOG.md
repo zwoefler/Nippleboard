@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.5.4-alpha] - Tue. 23.07.2024
+
+Add Standard Button + Housekeeping
+
+### ADDED
+- Button component
+- Added PauseButton Component
+
+### IMPROVED
+- Added Middleware function to upload sounds
+
+### FIX
+- Rmeoved Whitespaces
+
+
 ## [0.5.3-alpha] - Tue. 23.07.2024
 
 Add "Clear Searchbar" button to clear the searchbar with X-button
