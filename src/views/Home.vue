@@ -59,7 +59,7 @@
 import { ref, watch, onMounted } from 'vue';
 import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
-import { uploadFileToStorage } from '@/api/storage';
+import { uploadSound } from '@/middleware/uploadSounds';
 import PlayButton from '@/components/PlayButton.vue'
 import PauseButton from '@/components/PauseButton.vue'
 
@@ -90,12 +90,7 @@ function handleFileChange(event: Event) {
 }
 
 async function uploadFile() {
-  if (!selectedFile.value) {
-    alert('No file selected!');
-    return;
-  }
-  console.log('Uploading', selectedFile.value.name);
-  uploadFileToStorage(selectedFile.value, selectedFile.value.name)
+  await uploadSound(selectedFile.value)
   selectedFile.value = null
   await loadSounds()
 }
