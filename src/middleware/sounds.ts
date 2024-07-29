@@ -9,9 +9,9 @@ export async function fetchSoundsMetadata() {
         const soundURLs = await fetchSoundsURLs(soundPaths);
         const mergedSoundsMetadata = soundsMetadata.map(item => {
             const match = soundURLs.find(urlItem => urlItem.path === item.bucket_item);
-            return match ? { ...item, signedURL: match.signedUrl } : item;
+            return match ? { ...item, url: match.signedUrl } : item;
         });
-
+        console.log("MERGED", mergedSoundsMetadata)
         return mergedSoundsMetadata;
     } catch (error) {
         console.error('Error fetching or merging sound metadata:', error);
