@@ -7,7 +7,9 @@
 - [X] Delete search query in search bar with X in search bar
 
 ## Upload sounds with Metadata
-- [ ] Database which holds metadata: name (UNIQUE), bucket_item (BUcket link item), source_url (String), description (String)
+- [X] Database which holds metadata: name (UNIQUE), bucket_item (BUcket link item), source_url (String), description (String)
+- [ ] Viewing sounds, now from database. Use name to display name
+- [ ] Clicking Item plays sound
 - [ ] When item exists in storage, throw error, already exists.
 - [ ] When item with name already exits, throw error: Already exists.
 

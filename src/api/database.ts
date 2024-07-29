@@ -15,3 +15,21 @@ export async function insertToSoundDatabase(soundName: string, description: stri
         console.error(error)
     }
 }
+
+export async function readSoundsMetaData() {
+    try {
+        let { data: sounds, error } = await supabase
+            .from('sounds')
+            .select('*')
+        if (error) {
+            throw error;
+        }
+        console.log("SOUNDS", sounds)
+        return sounds;
+
+    } catch (error) {
+        console.error('Failed to fetch sounds metadata:', error.message);
+        return [];
+    }
+
+}

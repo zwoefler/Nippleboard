@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { fetchSoundsFromSupabase } from '@/api/storage';
 import { loadSoundsFromAssets } from '@/api/localSounds';
 import { getLoggedInUser } from '@/api/authentication';
+import { readSoundsMetaData } from '@/api/database';
 
 interface Sound {
     name: string;
@@ -12,6 +13,7 @@ interface Sound {
 export const useSoundsStore = defineStore('sounds', {
     state: () => ({
         sounds: [] as Sound[],
+        soundsMetaData: [{}] || null,
         searchQuery: '',
         useSupabase: true,
         loadingSounds: false
@@ -33,6 +35,7 @@ export const useSoundsStore = defineStore('sounds', {
             const isLoggedIn = await getLoggedInUser()
             if (this.useSupabase && isLoggedIn) {
                 this.sounds = await fetchSoundsFromSupabase()
+                this.soundsMetaData = readSoundsMetaData()
             } else {
                 this.useSupabase = false;
                 this.sounds = loadSoundsFromAssets();
