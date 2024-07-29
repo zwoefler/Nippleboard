@@ -104,7 +104,7 @@ async function handleUpload() {
 
 const soundsStore = useSoundsStore()
 const { filteredSounds, useSupabase, loadingSounds } = storeToRefs(soundsStore)
-
+console.log("FILETERD", filteredSounds.value)
 var searchQuery = ref("")
 
 const { toggleSource, loadSounds } = useSoundsStore();

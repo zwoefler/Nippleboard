@@ -5,6 +5,25 @@ interface Sound {
     url: string;
 }
 
+export async function fetchSoundsURLs(soundPaths: []) {
+    try {
+        const { data: signedURLs, error: urlsError } = await supabase
+            .storage
+            .from('sounds')
+            .createSignedUrls(soundPaths, 3600);
+
+        if (urlsError) {
+            console.error('Error getting signed URLs:', urlsError);
+            return [];
+        }
+        return signedURLs;
+
+    } catch (error) {
+        console.error('Error fetching sounds from Supabase:', error);
+        return []
+    }
+}
+
 export async function fetchSoundsFromSupabase(): Promise<Sound[]> {
     try {
         const soundFolder = "sounds/"

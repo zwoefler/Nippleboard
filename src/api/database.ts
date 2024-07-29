@@ -24,7 +24,6 @@ export async function readSoundsMetaData() {
         if (error) {
             throw error;
         }
-        console.log("SOUNDS", sounds)
         return sounds;
 
     } catch (error) {
