@@ -6,6 +6,11 @@
 - [ ] Hover over name like a link
 - [X] Delete search query in search bar with X in search bar
 
+## Upload sounds with Metadata
+- [ ] Database which holds metadata: name (UNIQUE), bucket_item (BUcket link item), source_url (String), description (String)
+- [ ] When item exists in storage, throw error, already exists.
+- [ ] When item with name already exits, throw error: Already exists.
+
 
 ## Soundbite Details
 - [ ] On upload provide: soundfile <File>, source URL <string>, description <string>, name <string>, automatically set "storagePath".

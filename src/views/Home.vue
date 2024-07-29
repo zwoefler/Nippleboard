@@ -18,12 +18,22 @@
         </svg>
       </button>
     </div>
-
-    <input type="file" ref="fileInput" class="hidden" @change="handleFileChange" accept="audio/*" />
-    <Button @click="triggerFileInput">Select File</Button>
-    <Button v-if="selectedFile" @click="uploadFile">Upload File</Button>
-    <p v-if="selectedFile" class="mt-2">Selected file: {{ selectedFile.name }}</p>
+    <div class="container mx-auto p-4">
+      <form @submit.prevent="handleUpload">
+        <input type="text" v-model="soundName" placeholder="Sound Name..."
+          class="text-gray-700 mb-2 p-2 border rounded w-full">
+        <input type="text" v-model="soundDescription" placeholder="Description..."
+          class="text-gray-700 mb-2 p-2 border rounded w-full">
+        <input type="text" v-model="soundSource" placeholder="Source URL..."
+          class="text-gray-700 mb-2 p-2 border rounded w-full">
+        <input type="file" @change="handleFileChange" class="text-gray-700 mb-4 p-2 border rounded w-full">
+        <Button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Upload Sound
+        </Button>
+      </form>
+    </div>
   </div>
+
   <div class="flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
     <Button @click="toggleSource">Toggle Source</Button>
     <p>Using Supabase: {{ useSupabase }}</p>
@@ -64,6 +74,34 @@ interface Sound {
   name: string;
   url: string;
 }
+
+const soundName = ref('');
+const soundDescription = ref('');
+const soundSource = ref('');
+const selectedFile = ref<File | null>(null);
+
+function handleFileChange(event: Event) {
+  const target = event.target as HTMLInputElement;
+  selectedFile.value = target.files ? target.files[0] : null;
+}
+
+async function handleUpload() {
+  if (!selectedFile.value) {
+    alert("Please select a file to upload");
+    return;
+  }
+  if (!soundName.value || !soundDescription.value || !soundSource.value) {
+    alert("Please fill in all fields");
+    return;
+  }
+  await uploadSound(selectedFile.value, soundName.value, soundDescription.value, soundSource.value);
+  soundName.value = "";
+  soundDescription.value = "";
+  soundSource.value = "";
+  selectedFile.value = null;
+  await loadSounds()
+}
+
 const soundsStore = useSoundsStore()
 const { filteredSounds, useSupabase, loadingSounds } = storeToRefs(soundsStore)
 
@@ -73,25 +111,6 @@ const { toggleSource, loadSounds } = useSoundsStore();
 onMounted(async () => {
   await loadSounds()
 });
-
-const fileInput = ref<HTMLInputElement | null>(null);
-const selectedFile = ref<File | null>(null);
-
-function triggerFileInput() {
-  fileInput.value?.click();
-}
-
-function handleFileChange(event: Event) {
-  const target = event.target as HTMLInputElement;
-  selectedFile.value = target.files ? target.files[0] : null;
-}
-
-async function uploadFile() {
-  await uploadSound(selectedFile.value)
-  selectedFile.value = null
-  await loadSounds()
-}
-
 
 function updateSearch() {
   soundsStore.setSearchQuery(searchQuery.value);
