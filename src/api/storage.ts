@@ -26,9 +26,9 @@ export async function fetchSoundsURLs(soundPaths: []) {
     }
 }
 
-export async function downloadSoundFromSupabase(soundName: string) {
+export async function downloadSoundFromSupabase(soundFile: string) {
     try {
-        const { data, error } = await supabase.storage.from('sounds').download(`sounds/${soundName}`);
+        const { data, error } = await supabase.storage.from('sounds').download(`sounds/${soundFile}`);
         if (error) {
             console.error("ERROR downloading sound: ", error);
             return null;
