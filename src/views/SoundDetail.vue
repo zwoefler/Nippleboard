@@ -19,6 +19,8 @@ import { downloadSoundFromSupabase } from '@/api/storage';
 interface Sound {
   name: string;
   url: string;
+  description: string;
+  source_url: string;
 }
 
 const route = useRoute();
@@ -45,6 +47,10 @@ function downloadFile(url: string, filename: string) {
   a.remove();
 }
 
+// FUnction takes name
+// Looks up bucketItem in Database
+// return bucket item
+// download bucket items
 async function downloadSound(soundName: string) {
   if (!sound.value) return;
   if (sound.value.url.startsWith('http')) {

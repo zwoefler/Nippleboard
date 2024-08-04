@@ -3,6 +3,8 @@ import { supabase } from './supabase';
 interface Sound {
     name: string;
     url: string;
+    description: string;
+    source_url: string;
 }
 
 export async function fetchSoundsURLs(soundPaths: []) {

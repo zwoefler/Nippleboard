@@ -73,6 +73,8 @@ import Button from '@/components/Button.vue'
 interface Sound {
   name: string;
   url: string;
+  description: string;
+  source_url: string;
 }
 
 const soundName = ref('');

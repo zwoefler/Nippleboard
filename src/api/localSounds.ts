@@ -1,6 +1,8 @@
 interface Sound {
     name: string;
     url: string;
+    description: string;
+    source_url: string;
 }
 
 export function loadSoundsFromAssets(): Sound[] {
