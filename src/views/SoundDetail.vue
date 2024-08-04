@@ -31,6 +31,7 @@ interface Sound {
   url: string;
   description: string;
   source_url: string;
+  bucket_item: string;
 }
 
 const route = useRoute();
@@ -40,6 +41,7 @@ const sound = ref<Sound | null>(null);
 
 onMounted(() => {
   sound.value = sounds.value.find(s => s.name === route.params.id) || null;
+  console.log("SOUND", sound.value)
 });
 
 function playSound() {
@@ -51,20 +53,22 @@ function playSound() {
 function downloadFile(url: string, filename: string) {
   const a = document.createElement('a');
   a.href = url;
-  a.download = filename;
+  a.download = filename || 'download';
   document.body.appendChild(a);
   a.click();
-  a.remove();
+  document.body.removeChild(a);
 }
 
 // FUnction takes name
 // Looks up bucketItem in Database
 // return bucket item
 // download bucket items
-async function downloadSound(soundName: string) {
+async function downloadSound() {
   if (!sound.value) return;
+  const soundName = sound.value.name
+  const fileName: string = sound.value.bucket_item.split('/').pop() || '';
   if (sound.value.url.startsWith('http')) {
-    const soundBlob = await downloadSoundFromSupabase(soundName);
+    const soundBlob = await downloadSoundFromSupabase(fileName);
     if (soundBlob) {
       const url = URL.createObjectURL(soundBlob);
       downloadFile(url, soundName)

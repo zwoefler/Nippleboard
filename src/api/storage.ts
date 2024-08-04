@@ -37,7 +37,6 @@ export async function downloadSoundFromSupabase(soundFile: string) {
     } catch (error) {
         console.error('Error downloading file:', error)
     }
-
 }
 
 

@@ -8,6 +8,7 @@ interface Sound {
     url: string;
     description: string;
     source_url: string;
+    bucket_item: string;
 }
 
 export const useSoundsStore = defineStore('sounds', {
