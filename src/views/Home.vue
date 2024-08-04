@@ -1,27 +1,47 @@
 <template>
-  <router-link class="bg-blue-500 p-2 rounded" to="/login">Login</router-link>
-  <input type="text" placeholder="Search sounds..." class="mb-4 p-2 border rounded w-full" @input="updateSearch" />
-  <div class="bg-gray-700 container text-white mx-auto p-4 flex flex-col items-center justify-center">
-    <input type="file" ref="fileInput" class="hidden" @change="handleFileChange" accept="audio/*" />
-    <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      @click="triggerFileInput">
-      Select File
-    </button>
-    <button v-if="selectedFile"
-      class="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      @click="uploadFile">
-      Upload File
-    </button>
-    <p v-if="selectedFile" class="mt-2">Selected file: {{ selectedFile.name }}</p>
+  <router-link to="/login">
+    <Button>
+      Login
+    </Button>
+  </router-link>
+
+  <div class="container text-white mx-auto p-4 flex flex-col items-center justify-center">
+    <div class="relative w-full mb-4">
+      <input type="text" v-model="searchQuery" placeholder="Search sounds..."
+        class="text-gray-700 p-2 border rounded w-full pl-3 pr-10" @input="updateSearch">
+      <button v-if="searchQuery" @click="clearSearch"
+        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+        <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M10 9.293l6.293-6.293a1 1 0 010 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 011.414-1.414L10 8.586l5.293-5.293a1 1 0 011.414 0z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+    <div class="container mx-auto p-4">
+      <form @submit.prevent="handleUpload">
+        <input type="text" v-model="soundName" placeholder="Sound Name..."
+          class="text-gray-700 mb-2 p-2 border rounded w-full">
+        <input type="text" v-model="soundDescription" placeholder="Description..."
+          class="text-gray-700 mb-2 p-2 border rounded w-full">
+        <input type="text" v-model="soundSource" placeholder="Source URL..."
+          class="text-gray-700 mb-2 p-2 border rounded w-full">
+        <input type="file" @change="handleFileChange" class="text-gray-700 mb-4 p-2 border rounded w-full">
+        <Button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Upload Sound
+        </Button>
+      </form>
+    </div>
   </div>
+
   <div class="flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
-    <button class="bg-blue-500 p-2  rounded" @click="toggleSource">Toggle Source</button>
+    <Button @click="toggleSource">Toggle Source</Button>
     <p>Using Supabase: {{ useSupabase }}</p>
   </div>
   <div class="bg-yellow-500 text-black" v-if="loadingSounds">
     Loading Sounds...
   </div>
+
   <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
     <li class="flex flex-col items-center h-32 max-w-36 bg-gray-700 text-white font-bold p-2 rounded"
       v-for="sound in filteredSounds" :key="sound.name">
@@ -29,72 +49,77 @@
         class="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full shadow-lg hover:cursor-pointer hover:drop-shadow-xl hover:bg-blue-600 hover:scale-105">
         <PlayButton id="play-button" v-if="currentPlaying === sound.name">
         </PlayButton>
-        <svg v-else id="pause-button" stroke="currentColor" fill="currentColor" viewBox="0 0 32 32"
-          enable-background="new 0 0 32 32">
-          <g>
-            <path fill="currentColor"
-              d="M19.609,14.802L14.316,10.8c-0.263-0.197-0.567-0.302-0.88-0.302C12.631,10.498,12,11.158,12,12v8 c0,0.842,0.635,1.502,1.445,1.502c0.313,0,0.619-0.104,0.885-0.304l5.258-3.998c0.382-0.287,0.611-0.742,0.611-1.218 C20.198,15.512,19.983,15.081,19.609,14.802z M18.985,16.401l-5.258,3.998C13.434,20.622,13,20.453,13,20v-8 c0-0.326,0.225-0.502,0.437-0.502c0.096,0,0.19,0.034,0.279,0.101l5.293,4.002c0.165,0.123,0.19,0.292,0.19,0.382 C19.198,16.147,19.122,16.3,18.985,16.401z">
-            </path>
-          </g>
-        </svg>
+        <PauseButton v-else id="pause-button">
+        </PauseButton>
       </button>
-      <div @click="goToSoundDetail(sound.name)">
-        <p class="p-2 text-wrap text-xs">
+      <router-link :to="{ name: 'SoundDetail', params: { name: sound.name } }">
+        <p class=" p-2 text-wrap text-xs">
           {{ sound.name }}
         </p>
-      </div>
+      </router-link>
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
-import { uploadFileToStorage } from '@/api/storage';
+import { uploadSound } from '@/middleware/uploadSounds';
 import PlayButton from '@/components/PlayButton.vue'
+import PauseButton from '@/components/PauseButton.vue'
+import Button from '@/components/Button.vue'
 
 interface Sound {
   name: string;
   url: string;
+  description: string;
+  source_url: string;
 }
-const soundsStore = useSoundsStore()
-const { filteredSounds, useSupabase, loadingSounds } = storeToRefs(soundsStore)
 
-const { toggleSource, loadSounds } = useSoundsStore();
-onMounted(async () => {
-  await loadSounds()
-});
-
-// UPLOADING SOUNDS
-const fileInput = ref<HTMLInputElement | null>(null);
+const soundName = ref('');
+const soundDescription = ref('');
+const soundSource = ref('');
 const selectedFile = ref<File | null>(null);
-
-function triggerFileInput() {
-  fileInput.value?.click();
-}
 
 function handleFileChange(event: Event) {
   const target = event.target as HTMLInputElement;
   selectedFile.value = target.files ? target.files[0] : null;
 }
 
-async function uploadFile() {
+
+
+const { toggleSource, loadSounds } = useSoundsStore();
+const soundsStore = useSoundsStore()
+const { filteredSounds, useSupabase, loadingSounds } = storeToRefs(soundsStore)
+console.log("FILETERD", filteredSounds.value)
+var searchQuery = ref("")
+
+async function handleUpload() {
   if (!selectedFile.value) {
-    alert('No file selected!');
+    alert("Please select a file to upload");
     return;
   }
-  console.log('Uploading', selectedFile.value.name);
-  uploadFileToStorage(selectedFile.value, selectedFile.value.name)
-  selectedFile.value = null
+  if (!soundName.value || !soundDescription.value || !soundSource.value) {
+    alert("Please fill in all fields");
+    return;
+  }
+  await uploadSound(selectedFile.value, soundName.value, soundDescription.value, soundSource.value);
+  soundName.value = "";
+  soundDescription.value = "";
+  soundSource.value = "";
+  selectedFile.value = null;
   await loadSounds()
 }
 
 
-function updateSearch(event: Event) {
-  const target = event.target as HTMLInputElement;
-  soundsStore.setSearchQuery(target.value);
+function updateSearch() {
+  soundsStore.setSearchQuery(searchQuery.value);
+}
+
+function clearSearch() {
+  searchQuery.value = ""
+  soundsStore.setSearchQuery(searchQuery.value);
 }
 
 const currentPlaying = ref<string | null>(null);
@@ -103,11 +128,6 @@ const audio = ref(new Audio());
 audio.value.onended = () => {
   currentPlaying.value = null;
 };
-
-const router = useRouter();
-function goToSoundDetail(soundName: string) {
-  router.push({ name: 'SoundDetail', params: { id: soundName } });
-}
 
 watch(currentPlaying, (newSound) => {
   if (newSound) {

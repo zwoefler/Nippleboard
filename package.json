@@ -1,6 +1,6 @@
 {
     "name": "nippleboard",
-    "version": "0.5.2-alpha",
+    "version": "0.6.0-alpha",
     "description": "Nippleboard - Play sounds",
     "private": true,
     "type": "module",

@@ -10,7 +10,7 @@ const routes = [
         component: Home
     },
     {
-        path: '/sound/:id',
+        path: '/sound/:name',
         name: 'SoundDetail',
         component: SoundDetail,
         props: true

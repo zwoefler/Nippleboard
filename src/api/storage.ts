@@ -3,24 +3,12 @@ import { supabase } from './supabase';
 interface Sound {
     name: string;
     url: string;
+    description: string;
+    source_url: string;
 }
 
-export async function fetchSoundsFromSupabase(): Promise<Sound[]> {
+export async function fetchSoundsURLs(soundPaths: []) {
     try {
-        const soundFolder = "sounds/"
-        const { data: soundsList } = await supabase
-            .storage
-            .from('sounds')
-            .list('sounds', {
-                limit: 100
-            });
-
-        if (!soundsList) {
-            console.error('No sounds list found.');
-            return [];
-        }
-
-        const soundPaths = soundsList.map(file => soundFolder + file.name);
         const { data: signedURLs, error: urlsError } = await supabase
             .storage
             .from('sounds')
@@ -30,21 +18,17 @@ export async function fetchSoundsFromSupabase(): Promise<Sound[]> {
             console.error('Error getting signed URLs:', urlsError);
             return [];
         }
+        return signedURLs;
 
-        const sounds = signedURLs.map(({ path, signedUrl }) => ({
-            name: path?.split('/').pop() || "Unnamed Sound",
-            url: signedUrl
-        }));
-        return sounds
     } catch (error) {
         console.error('Error fetching sounds from Supabase:', error);
         return []
     }
 }
 
-export async function downloadSoundFromSupabase(soundName: string) {
+export async function downloadSoundFromSupabase(soundFile: string) {
     try {
-        const { data, error } = await supabase.storage.from('sounds').download(`sounds/${soundName}`);
+        const { data, error } = await supabase.storage.from('sounds').download(`sounds/${soundFile}`);
         if (error) {
             console.error("ERROR downloading sound: ", error);
             return null;
@@ -53,7 +37,6 @@ export async function downloadSoundFromSupabase(soundName: string) {
     } catch (error) {
         console.error('Error downloading file:', error)
     }
-
 }
 
 
@@ -63,5 +46,19 @@ export async function uploadFileToStorage(file: File, fileName: string) {
         console.log("Ups, something went wrong")
     } else {
         console.log("Uploaded", data)
+    }
+}
+
+export async function deleteSoundFromStorage(bucketItem: string) {
+    const { data, error } = await supabase
+        .storage
+        .from('sounds')
+        .remove([bucketItem])
+    if (error) {
+        console.log("Ups, deleting sound from Storage went wrong")
+        return false
+    } else {
+        console.log("Deleted", data)
+        return true
     }
 }

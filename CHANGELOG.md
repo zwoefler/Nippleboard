@@ -1,5 +1,46 @@
 # Changelog
 
+## [0.6.0-alpha] - Sun. 04.08.2024
+
+Reworked SoundDetails Page. Nicer UI and include delete button
+
+## IMPROVED
+- Cleaner user Interface
+- Mobile optimised
+- Delete unnecessary functions
+
+## ADDED
+- DELETE button
+
+## FIX
+- On reload loads sound details
+
+## FEATURE
+- Redirect to Homepage after deletion
+
+
+## [0.5.4-alpha] - Tue. 23.07.2024
+
+Add Standard Button + Housekeeping
+
+### ADDED
+- Button component
+- Added PauseButton Component
+
+### IMPROVED
+- Added Middleware function to upload sounds
+
+### FIX
+- Rmeoved Whitespaces
+
+
+## [0.5.3-alpha] - Tue. 23.07.2024
+
+Add "Clear Searchbar" button to clear the searchbar with X-button
+
+### ADDED
+- Button to clear search bar
+
 ## [0.5.2-alpha] - Wed. 17.07.2024
 
 Add Login Link on Homepage
