@@ -59,10 +59,6 @@ function downloadFile(url: string, filename: string) {
   document.body.removeChild(a);
 }
 
-// FUnction takes name
-// Looks up bucketItem in Database
-// return bucket item
-// download bucket items
 async function downloadSound() {
   if (!sound.value) return;
   const soundName = sound.value.name
