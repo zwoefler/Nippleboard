@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto p-4 flex flex-col justify-center space-y-2" v-if="sound">
+  <div class="container mx-auto p-4 flex flex-col justify-center space-y-2 text-xl" v-if="sound">
     <h1 class="text-3xl font-bold">{{ sound.name }}</h1>
     <p>{{ sound.description }}</p>
     <a :href="sound.source_url" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700">{{
@@ -13,7 +13,7 @@
       </Button>
     </div>
     <Button @click="deleteSound" class="bg-red-500 w-full">
-      Delete
+      🗑️ Delete
     </Button>
   </div>
 </template>
