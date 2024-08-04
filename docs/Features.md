@@ -16,7 +16,7 @@
 
 ## Soundbite Details
 - [ ] On upload provide: soundfile <File>, source URL <string>, description <string>, name <string>, automatically set "storagePath".
-- [ ] On SoundDetail Page: Show Name, Source URL, Description, Download Button, Play Button
+- [ ] On SoundDetail Page: Show Name, Source URL, Description, Download Button, Play Button, Delete button
 - [ ] On SoundDetail Page: Have Save button to save changes made to name, description or source url
     - [ ] If name exists: Message --> "Sound with name xxx exists. "
     - [ ] Make existing sound playable + show name

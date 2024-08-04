@@ -1,11 +1,20 @@
 <template>
-  <div class="container mx-auto p-4" v-if="sound">
-    <h1>{{ sound.name }}</h1>
-    <p>URL: {{ sound.url }}</p>
-    <button @click="playSound"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Play</button>
-    <button @click="downloadSound(sound.name)"
-      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Download</button>
+  <div class="container mx-auto p-4 flex flex-col justify-center space-y-2" v-if="sound">
+    <h1 class="text-3xl font-bold">{{ sound.name }}</h1>
+    <p>{{ sound.description }}</p>
+    <a :href="sound.source_url" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700">{{
+    sound.source_url }}</a>
+    <div class="flex justify-between space-x-2">
+      <Button @click="playSound" class="w-full">
+        Play
+      </Button>
+      <Button @click="downloadSound" class="w-full">
+        Download
+      </Button>
+    </div>
+    <Button @click="deleteSound" class="bg-red-500 w-full">
+      Delete
+    </Button>
   </div>
 </template>
 
@@ -15,6 +24,7 @@ import { useRoute } from 'vue-router';
 import { storeToRefs } from "pinia";
 import { useSoundsStore } from '@/stores/sounds';
 import { downloadSoundFromSupabase } from '@/api/storage';
+import Button from "@/components/Button.vue"
 
 interface Sound {
   name: string;
