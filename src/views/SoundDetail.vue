@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from "pinia";
 import { useSoundsStore } from '@/stores/sounds';
 import { downloadSoundFromSupabase } from '@/api/storage';
@@ -36,6 +36,7 @@ interface Sound {
 }
 
 const route = useRoute();
+const router = useRouter();
 const soundsStore = useSoundsStore()
 const { sounds } = storeToRefs(soundsStore)
 const sound = ref<Sound | null>(null);
@@ -86,5 +87,6 @@ async function deleteSound() {
   await deleteSoundFromSupabase(sound.value.name, sound.value.bucket_item)
   // Delete sound from soundsStore (To not call API again!)
   // Redirect after deletion to Homepage
+  router.push({ name: 'Home' });
 }
 </script>
