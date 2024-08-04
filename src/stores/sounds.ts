@@ -14,6 +14,7 @@ interface Sound {
 export const useSoundsStore = defineStore('sounds', {
     state: () => ({
         sounds: [] as Sound[],
+        currentSound: null as Sound | null,
         searchQuery: '',
         useSupabase: true,
         loadingSounds: false
@@ -47,6 +48,9 @@ export const useSoundsStore = defineStore('sounds', {
         toggleSource() {
             this.useSupabase = !this.useSupabase;
             this.loadSounds();
-        }
+        },
+        setCurrentSound(sound: Sound | null) {
+            this.currentSound = sound;
+        },
     }
 });

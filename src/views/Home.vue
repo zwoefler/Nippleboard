@@ -52,7 +52,7 @@
         <PauseButton v-else id="pause-button">
         </PauseButton>
       </button>
-      <router-link :to="{ name: 'SoundDetail', params: { id: sound.name } }">
+      <router-link :to="{ name: 'SoundDetail', params: { name: sound.name } }">
         <p class=" p-2 text-wrap text-xs">
           {{ sound.name }}
         </p>
@@ -87,6 +87,14 @@ function handleFileChange(event: Event) {
   selectedFile.value = target.files ? target.files[0] : null;
 }
 
+
+
+const { toggleSource, loadSounds } = useSoundsStore();
+const soundsStore = useSoundsStore()
+const { filteredSounds, useSupabase, loadingSounds } = storeToRefs(soundsStore)
+console.log("FILETERD", filteredSounds.value)
+var searchQuery = ref("")
+
 async function handleUpload() {
   if (!selectedFile.value) {
     alert("Please select a file to upload");
@@ -104,15 +112,6 @@ async function handleUpload() {
   await loadSounds()
 }
 
-const soundsStore = useSoundsStore()
-const { filteredSounds, useSupabase, loadingSounds } = storeToRefs(soundsStore)
-console.log("FILETERD", filteredSounds.value)
-var searchQuery = ref("")
-
-const { toggleSource, loadSounds } = useSoundsStore();
-onMounted(async () => {
-  await loadSounds()
-});
 
 function updateSearch() {
   soundsStore.setSearchQuery(searchQuery.value);
