@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.6.0-alpha] - Sun. 04.08.2024
+
+Reworked SoundDetails Page. Nicer UI and include delete button
+
+## IMPROVED
+- Cleaner user Interface
+- Mobile optimised
+- Delete unnecessary functions
+
+## ADDED
+- DELETE button
+
+## FIX
+- On reload loads sound details
+
+## FEATURE
+- Redirect to Homepage after deletion
+
+
 ## [0.5.4-alpha] - Tue. 23.07.2024
 
 Add Standard Button + Housekeeping

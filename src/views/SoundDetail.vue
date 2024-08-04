@@ -27,8 +27,8 @@ import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useSoundsStore } from '@/stores/sounds';
 import { downloadSoundFromSupabase } from '@/api/storage';
-import Button from "@/components/Button.vue"
 import { deleteSoundFromSupabase } from "@/middleware/uploadSounds";
+import Button from "@/components/Button.vue"
 
 interface Sound {
   name: string;
@@ -53,14 +53,6 @@ onMounted(() => {
   if (soundsStore.sounds.length === 0 && !soundsStore.loadingSounds) {
     soundsStore.loadSounds();
   }
-  // if (!currentSound.value) return;
-  // console.log("SOUNDS LENGTH:", soundsStore.sounds.length)
-  // console.log("SOUNDS LOADING?", soundsStore.loadingSounds)
-  // if (soundsStore.sounds.length === 0 && !soundsStore.loadingSounds) {
-  //   console.log("STILL OADING. LOADING SOUNDS NOW")
-  //   sound.value = sounds.value.find(s => s.name === route.params.name) || null;
-  //   console.log("SOUND", sound.value)
-  // }
 });
 
 
@@ -101,11 +93,8 @@ async function deleteSound() {
     alert("Unable to load currentSound")
     return;
   }
-  // Delete currentSound from database & storage
-  // Call middleware for that!
   await deleteSoundFromSupabase(currentSound.value.name, currentSound.value.bucket_item)
   // Delete sound from soundsStore (To not call API again!)
-  // Redirect after deletion to Homepage
   router.push({ name: 'Home' });
 }
 </script>
