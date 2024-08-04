@@ -74,4 +74,11 @@ async function downloadSound() {
     downloadFile(sound.value.url, soundName)
   }
 }
+
+function deleteSound() {
+  // Delete sound from database & storage
+  // Call middleware for that!
+  // Delete sound from soundsStore (To not call API again!)
+  // Redirect after deletion to Homepage
+}
 </script>
