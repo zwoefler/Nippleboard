@@ -48,3 +48,17 @@ export async function uploadFileToStorage(file: File, fileName: string) {
         console.log("Uploaded", data)
     }
 }
+
+export async function deleteSoundFromStorage(bucketItem: string) {
+    const { data, error } = await supabase
+        .storage
+        .from('sounds')
+        .remove([bucketItem])
+    if (error) {
+        console.log("Ups, deleting sound from Storage went wrong")
+        return false
+    } else {
+        console.log("Deleted", data)
+        return true
+    }
+}

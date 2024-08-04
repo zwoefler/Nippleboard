@@ -25,6 +25,7 @@ import { storeToRefs } from "pinia";
 import { useSoundsStore } from '@/stores/sounds';
 import { downloadSoundFromSupabase } from '@/api/storage';
 import Button from "@/components/Button.vue"
+import { deleteSoundFromSupabase } from "@/middleware/uploadSounds";
 
 interface Sound {
   name: string;
@@ -75,9 +76,14 @@ async function downloadSound() {
   }
 }
 
-function deleteSound() {
+async function deleteSound() {
+  if (!sound.value) {
+    alert("Unable to load sound")
+    return;
+  }
   // Delete sound from database & storage
   // Call middleware for that!
+  await deleteSoundFromSupabase(sound.value.name, sound.value.bucket_item)
   // Delete sound from soundsStore (To not call API again!)
   // Redirect after deletion to Homepage
 }

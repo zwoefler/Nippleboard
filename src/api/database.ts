@@ -30,5 +30,17 @@ export async function readSoundsMetaData() {
         console.error('Failed to fetch sounds metadata:', error.message);
         return [];
     }
+}
 
+export async function deleteSoundFromDatabase(soundName: string) {
+    const { error } = await supabase
+        .from('sounds')
+        .delete()
+        .eq('name', soundName)
+    if (error) {
+        alert("ERROR DELETING SOUND ENTRY")
+        return false
+    } else {
+        return true
+    }
 }
