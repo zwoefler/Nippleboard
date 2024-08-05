@@ -5,29 +5,16 @@
     </Button>
   </router-link>
 
-  <div class="container text-white mx-auto p-4 flex flex-col items-center justify-center">
-    <div class="relative w-full mb-4">
-      <Input v-model="searchQuery" placeholder="Search sounds..." @input="updateSearch" />
-      <button v-if="searchQuery" @click="clearSearch"
-        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
-        <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-          <path fill-rule="evenodd"
-            d="M10 9.293l6.293-6.293a1 1 0 010 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 011.414-1.414L10 8.586l5.293-5.293a1 1 0 011.414 0z"
-            clip-rule="evenodd" />
-        </svg>
-      </button>
-    </div>
-    <div class="container mx-auto p-4">
-      <form class="space-y-1" @submit.prevent="handleUpload">
-        <Input v-model="soundName" placeholder="Sound Name..." />
-        <Input v-model="soundDescription" placeholder="Description..." />
-        <Input v-model="soundSource" placeholder="Source URL..." />
-        <Input type="file" @change="handleFileChange" />
-        <Button type="submit">
-          Upload Sound
-        </Button>
-      </form>
-    </div>
+  <div class="relative w-full mb-4">
+    <Input v-model="searchQuery" placeholder="Search sounds..." @input="updateSearch" />
+    <button v-if="searchQuery" @click="clearSearch"
+      class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+      <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+          d="M10 9.293l6.293-6.293a1 1 0 010 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 011.414-1.414L10 8.586l5.293-5.293a1 1 0 011.414 0z"
+          clip-rule="evenodd" />
+      </svg>
+    </button>
   </div>
 
   <div class=" flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
@@ -61,7 +48,6 @@
 import { ref, watch } from 'vue';
 import { useSoundsStore } from "@/stores/sounds"
 import { storeToRefs } from "pinia";
-import { uploadSound } from '@/middleware/uploadSounds';
 import PlayButton from '@/components/PlayButton.vue'
 import PauseButton from '@/components/PauseButton.vue'
 import Button from '@/components/Button.vue'
@@ -74,40 +60,15 @@ interface Sound {
   source_url: string;
 }
 
-const soundName = ref('');
-const soundDescription = ref('');
-const soundSource = ref('');
-const selectedFile = ref<File | null>(null);
-
-function handleFileChange(event: Event) {
-  const target = event.target as HTMLInputElement;
-  selectedFile.value = target.files ? target.files[0] : null;
-}
 
 
 
-const { toggleSource, loadSounds } = useSoundsStore();
+const { toggleSource } = useSoundsStore();
 const soundsStore = useSoundsStore()
 const { filteredSounds, useSupabase, loadingSounds } = storeToRefs(soundsStore)
 console.log("FILETERD", filteredSounds.value)
 var searchQuery = ref("")
 
-async function handleUpload() {
-  if (!selectedFile.value) {
-    alert("Please select a file to upload");
-    return;
-  }
-  if (!soundName.value || !soundDescription.value || !soundSource.value) {
-    alert("Please fill in all fields");
-    return;
-  }
-  await uploadSound(selectedFile.value, soundName.value, soundDescription.value, soundSource.value);
-  soundName.value = "";
-  soundDescription.value = "";
-  soundSource.value = "";
-  selectedFile.value = null;
-  await loadSounds()
-}
 
 
 function updateSearch() {
