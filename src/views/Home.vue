@@ -37,7 +37,7 @@
     <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
       <li class="flex flex-col items-center h-32 max-w-36 bg-gray-700 text-white font-bold p-2 rounded"
         v-for="sound in filteredSounds" :key="sound.name">
-        <button @click="playSound(sound)"
+        <button @click="toggleSound(sound)"
           class="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full shadow-lg hover:cursor-pointer hover:drop-shadow-xl hover:bg-blue-600 hover:scale-105">
           <PlayButton id="play-button" v-if="currentPlaying === sound.name">
           </PlayButton>
@@ -109,8 +109,9 @@ watch(currentPlaying, (newSound) => {
   }
 });
 
-function playSound(sound: Sound) {
+function toggleSound(sound: Sound) {
   if (currentPlaying.value === sound.name) {
+    audio.value.pause()
     currentPlaying.value = null;
   } else {
     currentPlaying.value = sound.name;
