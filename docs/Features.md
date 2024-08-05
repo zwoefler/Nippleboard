@@ -1,4 +1,11 @@
 # 🚀 FEATURES
+- [ ] Add loading spinner
+- [ ] When logged in Login button displays "Logout"
+- [ ] Standard screen Login screen?
+
+
+
+
 - [X] Searchbar to search for sounds
 - [X] Sound page: Name, URL, Play, Download
 - [X] Add PauseButton as component
