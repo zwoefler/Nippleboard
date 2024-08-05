@@ -19,22 +19,19 @@
       </button>
     </div>
     <div class="container mx-auto p-4">
-      <form @submit.prevent="handleUpload">
-        <input type="text" v-model="soundName" placeholder="Sound Name..."
-          class="text-gray-700 mb-2 p-2 border rounded w-full">
-        <input type="text" v-model="soundDescription" placeholder="Description..."
-          class="text-gray-700 mb-2 p-2 border rounded w-full">
-        <input type="text" v-model="soundSource" placeholder="Source URL..."
-          class="text-gray-700 mb-2 p-2 border rounded w-full">
-        <input type="file" @change="handleFileChange" class="text-gray-700 mb-4 p-2 border rounded w-full">
-        <Button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <form class="space-y-1" @submit.prevent="handleUpload">
+        <Input type="text" v-model="soundName" placeholder="Sound Name..." />
+        <Input type="text" v-model="soundDescription" placeholder="Description..." />
+        <Input type="text" v-model="soundSource" placeholder="Source URL..." />
+        <Input type="file" @change="handleFileChange" />
+        <Button type="submit">
           Upload Sound
         </Button>
       </form>
     </div>
   </div>
 
-  <div class="flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
+  <div class=" flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
     <Button @click="toggleSource">Toggle Source</Button>
     <p>Using Supabase: {{ useSupabase }}</p>
   </div>
@@ -69,6 +66,7 @@ import { uploadSound } from '@/middleware/uploadSounds';
 import PlayButton from '@/components/PlayButton.vue'
 import PauseButton from '@/components/PauseButton.vue'
 import Button from '@/components/Button.vue'
+import Input from '@/components/Input.vue'
 
 interface Sound {
   name: string;
