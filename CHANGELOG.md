@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.6.2-alpha] - Mon. 05.08.2024
+
+Refactoring: Using Input and Button component
+
+## ADDED
+- Input component
+
+## IMPROVED
+- Button now has full width
+
 ## [0.6.1-alpha] - Sun. 04.08.2024
 
 Improved UI of Login page.
