@@ -7,8 +7,7 @@
 
   <div class="container text-white mx-auto p-4 flex flex-col items-center justify-center">
     <div class="relative w-full mb-4">
-      <input type="text" v-model="searchQuery" placeholder="Search sounds..."
-        class="text-gray-700 p-2 border rounded w-full pl-3 pr-10" @input="updateSearch">
+      <Input v-model="searchQuery" placeholder="Search sounds..." @input="updateSearch" />
       <button v-if="searchQuery" @click="clearSearch"
         class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
         <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -20,9 +19,9 @@
     </div>
     <div class="container mx-auto p-4">
       <form class="space-y-1" @submit.prevent="handleUpload">
-        <Input type="text" v-model="soundName" placeholder="Sound Name..." />
-        <Input type="text" v-model="soundDescription" placeholder="Description..." />
-        <Input type="text" v-model="soundSource" placeholder="Source URL..." />
+        <Input v-model="soundName" placeholder="Sound Name..." />
+        <Input v-model="soundDescription" placeholder="Description..." />
+        <Input v-model="soundSource" placeholder="Source URL..." />
         <Input type="file" @change="handleFileChange" />
         <Button type="submit">
           Upload Sound
