@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.6.1-alpha] - Sun. 04.08.2024
+
+Improved UI of Login page.
+
+## IMPROVED
+- Cleaner user Interface
+- Mobile optimised
+
+
 ## [0.6.0-alpha] - Sun. 04.08.2024
 
 Reworked SoundDetails Page. Nicer UI and include delete button
