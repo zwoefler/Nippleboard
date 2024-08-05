@@ -1,48 +1,57 @@
 <template>
-  <router-link to="/login">
-    <Button>
-      Login
-    </Button>
-  </router-link>
-
-  <div class="relative w-full mb-4">
-    <input v-model="searchQuery" placeholder="Search sounds..." @input="updateSearch" type="text"
-      class="text-gray-700 p-2 border rounded w-full pl-3 pr-10" />
-    <button v-if="searchQuery" @click="clearSearch"
-      class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
-      <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-        <path fill-rule="evenodd"
-          d="M10 9.293l6.293-6.293a1 1 0 010 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 011.414-1.414L10 8.586l5.293-5.293a1 1 0 011.414 0z"
-          clip-rule="evenodd" />
-      </svg>
-    </button>
-  </div>
-
-  <div class=" flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
-    <Button @click="toggleSource">Toggle Source</Button>
-    <p>Using Supabase: {{ useSupabase }}</p>
-  </div>
-  <div class="bg-yellow-500 text-black" v-if="loadingSounds">
-    Loading Sounds...
-  </div>
-
-  <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
-    <li class="flex flex-col items-center h-32 max-w-36 bg-gray-700 text-white font-bold p-2 rounded"
-      v-for="sound in filteredSounds" :key="sound.name">
-      <button @click="playSound(sound)"
-        class="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full shadow-lg hover:cursor-pointer hover:drop-shadow-xl hover:bg-blue-600 hover:scale-105">
-        <PlayButton id="play-button" v-if="currentPlaying === sound.name">
-        </PlayButton>
-        <PauseButton v-else id="pause-button">
-        </PauseButton>
-      </button>
-      <router-link :to="{ name: 'SoundDetail', params: { name: sound.name } }">
-        <p class=" p-2 text-wrap text-xs">
-          {{ sound.name }}
-        </p>
+  <div class="container mx-auto p-2 flex flex-col justify-center space-y-2 text-xl">
+    <div class="flex space-x-2 w-full">
+      <router-link to="/login">
+        <Button>
+          Login
+        </Button>
       </router-link>
-    </li>
-  </ul>
+      <router-link to="/upload">
+        <Button>
+          Upload component
+        </Button>
+      </router-link>
+    </div>
+
+    <div class="relative w-full mb-4">
+      <input v-model="searchQuery" placeholder="Search sounds..." @input="updateSearch" type="text"
+        class="text-gray-700 p-2 border rounded w-full pl-3 pr-10" />
+      <button v-if="searchQuery" @click="clearSearch"
+        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+        <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M10 9.293l6.293-6.293a1 1 0 010 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 011.414-1.414L10 8.586l5.293-5.293a1 1 0 011.414 0z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+
+    <div class=" flex p-2 items-center justify-center space-x-2 bg-gray-700 text-white">
+      <Button @click="toggleSource">Toggle Source</Button>
+      <p>Using Supabase: {{ useSupabase }}</p>
+    </div>
+    <div class="bg-yellow-500 text-black" v-if="loadingSounds">
+      Loading Sounds...
+    </div>
+
+    <ul class="grid grid-cols-3 md:grid-cols-6 gap-4 p-2">
+      <li class="flex flex-col items-center h-32 max-w-36 bg-gray-700 text-white font-bold p-2 rounded"
+        v-for="sound in filteredSounds" :key="sound.name">
+        <button @click="playSound(sound)"
+          class="w-12 h-12 flex items-center justify-center bg-blue-500 rounded-full shadow-lg hover:cursor-pointer hover:drop-shadow-xl hover:bg-blue-600 hover:scale-105">
+          <PlayButton id="play-button" v-if="currentPlaying === sound.name">
+          </PlayButton>
+          <PauseButton v-else id="pause-button">
+          </PauseButton>
+        </button>
+        <router-link :to="{ name: 'SoundDetail', params: { name: sound.name } }">
+          <p class=" p-2 text-wrap text-xs">
+            {{ sound.name }}
+          </p>
+        </router-link>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
