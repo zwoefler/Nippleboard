@@ -6,7 +6,8 @@
   </router-link>
 
   <div class="relative w-full mb-4">
-    <Input v-model="searchQuery" placeholder="Search sounds..." @input="updateSearch" />
+    <input v-model="searchQuery" placeholder="Search sounds..." @input="updateSearch" type="text"
+      class="text-gray-700 p-2 border rounded w-full pl-3 pr-10" />
     <button v-if="searchQuery" @click="clearSearch"
       class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
       <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
