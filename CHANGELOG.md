@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.7.0-alpha] - Mon. 05.08.2024
+
+Upload Page with own route
+
+## ADDED
+- Upload View with own route
+
+## FIX
+- Custom Input component emitting input events
+
 ## [0.6.2-alpha] - Mon. 05.08.2024
 
 Refactoring: Using Input and Button component
