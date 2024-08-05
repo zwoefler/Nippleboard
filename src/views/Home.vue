@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto p-2 flex flex-col justify-center space-y-2 text-xl">
-    <div class="flex space-x-2 w-full">
+    <div class="flex justify-between space-x-2">
       <router-link to="/login">
         <Button>
           Login
