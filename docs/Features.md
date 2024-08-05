@@ -5,7 +5,7 @@
 - [X] Click on Navbar to redirecto to Home
 - [ ] Hover over name like a link
 - [X] Delete search query in search bar with X in search bar
-- [ ] Prettify Login Page
+- [X] Prettify Login Page
 
 ## Upload sounds with Metadata
 - [X] Database which holds metadata: name (UNIQUE), bucket_item (BUcket link item), source_url (String), description (String)
