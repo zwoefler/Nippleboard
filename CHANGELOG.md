@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.7.1-alpha] - Mon. 05.08.2024
+
+FIX: Stop sound when pressing Playbutton again
+
+## FIX
+- Pause when pressing playbutton
+
+
+## [0.7.0-alpha] - Mon. 05.08.2024
+
+Upload Page with own route
+
+## ADDED
+- Upload View with own route
+
+## FIX
+- Custom Input component emitting input events
+
+## [0.6.2-alpha] - Mon. 05.08.2024
+
+Refactoring: Using Input and Button component
+
+## ADDED
+- Input component
+
+## IMPROVED
+- Button now has full width
+
+## [0.6.1-alpha] - Sun. 04.08.2024
+
+Improved UI of Login page.
+
+## IMPROVED
+- Cleaner user Interface
+- Mobile optimised
+
+
 ## [0.6.0-alpha] - Sun. 04.08.2024
 
 Reworked SoundDetails Page. Nicer UI and include delete button

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import SoundDetail from '../views/SoundDetail.vue';
 import Login from '../views/Login.vue';
+import Upload from '../views/Upload.vue';
 
 const routes = [
     {
@@ -14,6 +15,11 @@ const routes = [
         name: 'SoundDetail',
         component: SoundDetail,
         props: true
+    },
+    {
+        path: '/upload',
+        name: 'Upload',
+        component: Upload
     },
     {
         path: '/login',
