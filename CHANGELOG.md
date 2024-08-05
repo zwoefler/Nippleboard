@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.1-alpha] - Mon. 05.08.2024
+
+FIX: Stop sound when pressing Playbutton again
+
+## FIX
+- Pause when pressing playbutton
+
+
 ## [0.7.0-alpha] - Mon. 05.08.2024
 
 Upload Page with own route
